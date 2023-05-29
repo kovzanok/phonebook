@@ -27,7 +27,13 @@ export default function LoginPage() {
             p='20px'
             mx='auto'
           >
-            <form>
+            <form
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                rowGap: "10px",
+              }}
+            >
               <TextInput withAsterisk label='Логин' placeholder='ods' />
 
               <PasswordInput withAsterisk label='Пароль' />
