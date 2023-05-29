@@ -1,7 +1,53 @@
-import React from 'react'
+import {
+  TextInput,
+  PasswordInput,
+  Button,
+  Group,
+  Box,
+  Center,
+  Text,
+  Flex,
+  MediaQuery,
+  Title,
+} from "@mantine/core";
+
+import { Link } from "react-router-dom";
 
 export default function RegisterPage() {
   return (
-    <div>RegisterPage</div>
-  )
+    <Center h={"100vh"}>
+      <Flex gap='lg' align='center' justify='center' direction='column'>
+        <Title size='h1'>Регистрация</Title>
+        <MediaQuery styles={{ width: "300px" }} query='(min-width: 768px)'>
+          <Box
+            sx={{
+              boxShadow: "0px 0px 10px 2px rgba(0,0,0,0.3);",
+              borderRadius: "10px",
+            }}
+            p='20px'
+            mx='auto'
+          >
+            <form
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                rowGap: "10px",
+              }}
+            >
+              <TextInput withAsterisk label='Логин' placeholder='ods' />
+              <PasswordInput withAsterisk label='Пароль' />
+              <PasswordInput withAsterisk label='Повторите пароль' />
+              <Group position='center' mt='md'>
+                <Button type='submit'>Зарегистрироваться</Button>
+              </Group>
+            </form>
+          </Box>
+        </MediaQuery>
+
+        <Text>
+          Есть аккаунт? <Link to='/login'>Перейти к авторизации</Link>
+        </Text>
+      </Flex>
+    </Center>
+  );
 }
