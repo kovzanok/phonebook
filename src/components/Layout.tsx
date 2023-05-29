@@ -1,19 +1,19 @@
 import { Outlet } from "react-router-dom";
-import { useState } from "react";
+
 import {
   AppShell,
   Navbar,
-  Header,
   Text,
-  MediaQuery,
-  Burger,
   useMantineTheme,
+  MantineTheme,
 } from "@mantine/core";
 import MyFooter from "./MyFooter";
+import MyHeader from "./MyHeader";
+import { useState } from "react";
 
 export default function Layout() {
-  const [opened, setOpened] = useState(false);
-  const theme = useMantineTheme();
+  const [opened, setOpened] = useState<boolean>(false);
+  const theme: MantineTheme = useMantineTheme();
   return (
     <AppShell
       styles={{
@@ -36,25 +36,7 @@ export default function Layout() {
         </Navbar>
       }
       footer={<MyFooter></MyFooter>}
-      header={
-        <Header height={{ base: 50, md: 70 }} p='md'>
-          <div
-            style={{ display: "flex", alignItems: "center", height: "100%" }}
-          >
-            <MediaQuery largerThan='sm' styles={{ display: "none" }}>
-              <Burger
-                opened={opened}
-                onClick={() => setOpened((o) => !o)}
-                size='sm'
-                color={theme.colors.gray[6]}
-                mr='xl'
-              />
-            </MediaQuery>
-
-            <Text>Application header</Text>
-          </div>
-        </Header>
-      }
+      header={<MyHeader theme={theme} setOpened={setOpened} opened={opened} />}
     >
       <Text>
         <Outlet></Outlet>
