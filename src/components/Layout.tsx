@@ -4,12 +4,12 @@ import {
   AppShell,
   Navbar,
   Header,
-  Footer,
   Text,
   MediaQuery,
   Burger,
   useMantineTheme,
 } from "@mantine/core";
+import MyFooter from "./MyFooter";
 
 export default function Layout() {
   const [opened, setOpened] = useState(false);
@@ -26,15 +26,16 @@ export default function Layout() {
       }}
       navbarOffsetBreakpoint='sm'
       navbar={
-        <Navbar hidden={!opened} p='md' hiddenBreakpoint='sm' width={{ sm: 200, lg: 300 }}>
+        <Navbar
+          hidden={!opened}
+          p='md'
+          hiddenBreakpoint='sm'
+          width={{ sm: 200, lg: 300 }}
+        >
           <Text>Application navbar</Text>
         </Navbar>
       }
-      footer={
-        <Footer height={60} p='md'>
-          Application footer
-        </Footer>
-      }
+      footer={<MyFooter></MyFooter>}
       header={
         <Header height={{ base: 50, md: 70 }} p='md'>
           <div
