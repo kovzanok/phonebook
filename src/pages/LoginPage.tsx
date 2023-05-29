@@ -10,21 +10,10 @@ import {
   MediaQuery,
   Title,
 } from "@mantine/core";
-import { useForm } from "@mantine/form";
+
 import { Link } from "react-router-dom";
 
 export default function LoginPage() {
-  const form = useForm({
-    initialValues: {
-      email: "",
-      termsOfService: false,
-    },
-
-    validate: {
-      email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
-    },
-  });
-
   return (
     <Center h={"100vh"}>
       <Flex gap='lg' align='center' justify='center' direction='column'>
@@ -38,19 +27,10 @@ export default function LoginPage() {
             p='20px'
             mx='auto'
           >
-            <form onSubmit={form.onSubmit((values) => console.log(values))}>
-              <TextInput
-                withAsterisk
-                label='Логин'
-                placeholder='ods'
-                {...form.getInputProps("login")}
-              />
+            <form>
+              <TextInput withAsterisk label='Логин' placeholder='ods' />
 
-              <PasswordInput
-                withAsterisk
-                label='Пароль'
-                {...form.getInputProps("password")}
-              />
+              <PasswordInput withAsterisk label='Пароль' />
 
               <Group position='center' mt='md'>
                 <Button type='submit'>Войти</Button>
