@@ -1,4 +1,13 @@
-import { Header, MediaQuery, Burger, Title, MantineTheme } from "@mantine/core";
+import {
+  Header,
+  MediaQuery,
+  Burger,
+  Title,
+  Text,
+  MantineTheme,
+  Group,
+  Button,
+} from "@mantine/core";
 
 interface IMyHeaderProps {
   opened: boolean;
@@ -26,10 +35,16 @@ export default function MyHeader({ opened, setOpened, theme }: IMyHeaderProps) {
             color={theme.colors.gray[6]}
           />
         </MediaQuery>
+        <MediaQuery query="(max-width:430px)" styles={{ display: "none" }}>
+          <Title m='auto' ta='center' size='h4'>
+            Телефонный справочник потребителей
+          </Title>
+        </MediaQuery>
 
-        <Title m='auto' ta='center' size='h4'>
-          Телефонный справочник потребителей
-        </Title>
+        <Group noWrap align='center' position='right'>
+          <Text underline>ods</Text>
+          <Button>Выйти</Button>
+        </Group>
       </div>
     </Header>
   );
