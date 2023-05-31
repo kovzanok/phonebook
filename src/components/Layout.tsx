@@ -24,7 +24,7 @@ export default function Layout() {
               : theme.colors.gray[0],
         },
       }}
-      navbarOffsetBreakpoint='sm'
+      navbarOffsetBreakpoint={880}
       navbar={<MyNavBar opened={opened} />}
       footer={<MyFooter></MyFooter>}
       header={<MyHeader theme={theme} setOpened={setOpened} opened={opened} />}

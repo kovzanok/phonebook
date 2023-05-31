@@ -84,8 +84,8 @@ export default function MyNavBar({ opened }: IMyNavBarProps) {
     <Navbar
       hidden={!opened}
       p='md'
-      hiddenBreakpoint='sm'
-      width={{ sm: 300, lg: 400 }}
+      hiddenBreakpoint={880}
+      width={{ sm: 250, md: 300, lg: 400 }}
     >
       <Flex direction='column' align='center' gap='15px'>
         <form
