@@ -1,8 +1,9 @@
 .add-client-link {
   display: inline-block;
-  width: 70%;
+  width: 80%;
   text-align: center;
-  padding: 6px 0;
+  padding: 10px 0;
+  font-size: 18px;
   text-decoration: none;
   color: white;
   background-color: #228be6;
@@ -13,4 +14,10 @@
 .add-client-link:hover {
   background-color: #1c7ed6;
   border: 1px solid #1c7ed6;
+}
+
+@media (max-width: 1200px && min-width:880px) {
+  .add-client-link {
+    font-size: 14px;
+  }
 }
