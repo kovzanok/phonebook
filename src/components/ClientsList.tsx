@@ -12,7 +12,7 @@ export default function ClientsList({ clients }: IClientsListProps) {
     <ul
       style={{
         listStyle: "none",
-        width: "70%",
+        width: "80%",
         padding: 0,
         margin: 0,
         display: "flex",
