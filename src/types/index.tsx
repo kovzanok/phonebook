@@ -1,9 +1,9 @@
 export interface IClient {
   id: number;
   name: string;
-  substations: [substation];
-  people?: [IPerson];
-  contacts?: [IContact];
+  substations: substation[];
+  people?: IPerson[];
+  contacts?: IContact[];
 }
 
 interface IPerson extends IContact {
@@ -13,8 +13,8 @@ interface IPerson extends IContact {
 
 interface IContact {
   name: string;
-  phones?: [phone];
-  destination?: [addressee];
+  phones?: addressee[];
+  destination?: addressee[];
   id: number;
 }
 
@@ -24,13 +24,9 @@ type substation = {
   info?: string;
 };
 
-type phone = {
-  number: string;
-  id: number;
-};
 
-type addressee = {
-  text: string;
+export type addressee = {
+  value: string;
   id: number;
 };
 
