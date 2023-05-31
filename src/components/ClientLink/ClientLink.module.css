@@ -1,0 +1,26 @@
+.client-link {
+  display: inline-block;
+  text-decoration: none;
+  width: inherit;
+  text-align: center;
+  font-size: 20px;
+  color: black;
+  padding: 7px 0;
+  border-radius: 5px;
+  box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.3);
+}
+
+.client-link_active {
+  background-color: #228be6;
+  color: white;
+}
+
+.client-link:hover {
+  color: black;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.client-link_active:hover {
+  background-color: #1c7ed6;
+  color: white;
+}
