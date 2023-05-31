@@ -2,7 +2,6 @@ import { Outlet } from "react-router-dom";
 
 import {
   AppShell,
-  Navbar,
   Text,
   useMantineTheme,
   MantineTheme,
@@ -10,6 +9,7 @@ import {
 import MyFooter from "./MyFooter";
 import MyHeader from "./MyHeader";
 import { useState } from "react";
+import MyNavBar from "./MyNavBar";
 
 export default function Layout() {
   const [opened, setOpened] = useState<boolean>(false);
@@ -25,16 +25,7 @@ export default function Layout() {
         },
       }}
       navbarOffsetBreakpoint='sm'
-      navbar={
-        <Navbar
-          hidden={!opened}
-          p='md'
-          hiddenBreakpoint='sm'
-          width={{ sm: 200, lg: 300 }}
-        >
-          <Text>Application navbar</Text>
-        </Navbar>
-      }
+      navbar={<MyNavBar opened={opened} />}
       footer={<MyFooter></MyFooter>}
       header={<MyHeader theme={theme} setOpened={setOpened} opened={opened} />}
     >
