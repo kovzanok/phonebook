@@ -1,0 +1,16 @@
+.substation-list {
+  list-style: none;
+  display: flex;
+  padding: 0;
+  align-items: center;
+  column-gap: 15px;
+}
+
+.substation-item {
+  text-align: center;
+}
+
+.substation-item:not(:last-child) {
+  padding-right: 15px;
+  border-right: 1px solid black;
+}
