@@ -4,8 +4,8 @@ export interface IClient {
   id: number;
   name: string;
   substations: substation[];
-  people?: IPerson[];
-  contacts?: IContact[];
+  people: IPerson[] | [];
+  contacts: IContact[] | [];
 }
 
 export interface IPerson extends IContact {
