@@ -1,0 +1,15 @@
+.adressee-list {
+  display: flex;
+  flex-direction: column;
+  row-gap: 5px;
+  font-size: 20px;
+  list-style: none;
+  padding: 0;
+}
+
+.adressee-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 5px;
+}
