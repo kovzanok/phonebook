@@ -6,7 +6,7 @@ import classNames from "./ContactsList.module.css";
 import ContactName from "../ContactName";
 
 interface IContactsListProps {
-  contacts: IPerson[] | IContact[] | undefined;
+  contacts: IPerson[] | IContact[];
 }
 
 export const ContactsList = ({
@@ -14,7 +14,7 @@ export const ContactsList = ({
   contacts,
 }: React.PropsWithChildren<IContactsListProps>) => {
   {
-    if (contacts) {
+    if (contacts.length !== 0) {
       return (
         <div className={classNames["list-wrapper"]}>
           <Title ta='center' size='h3'>
@@ -23,7 +23,7 @@ export const ContactsList = ({
           <ul className={classNames["contacts-list"]}>
             {contacts.map((contact) => (
               <li className={classNames["contacts-item"]}>
-                <ContactName contact={contact}/>
+                <ContactName contact={contact} />
                 <AdresseeList list={contact.phones} />
                 <AdresseeList list={contact.email} />
                 {"info" in contact && <Text fz='20px'>{contact.info}</Text>}
