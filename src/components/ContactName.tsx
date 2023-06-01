@@ -1,9 +1,9 @@
 import React from "react";
-import { IContact } from "../types";
+import { IContact, IPerson } from "../types";
 import { Text, Title } from "@mantine/core";
 
 interface IContactNameProps {
-  contact: IContact;
+  contact: IContact | IPerson;
 }
 
 export default function ContactName({ contact }: IContactNameProps) {
