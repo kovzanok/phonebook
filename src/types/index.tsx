@@ -6,19 +6,19 @@ export interface IClient {
   contacts?: IContact[];
 }
 
-interface IPerson extends IContact {
+export interface IPerson extends IContact {
   position: string;
   info: string;
 }
 
-interface IContact {
+export interface IContact {
   name: string;
   phones?: addressee[];
   destination?: addressee[];
   id: number;
 }
 
-type substation = {
+export type substation = {
   id: number;
   name: string;
   info?: string;
