@@ -1,4 +1,8 @@
-import React from 'react'
+import React from "react";
+import { IClient } from "../types";
+import { Title, Flex } from "@mantine/core";
+import SubstationList from "../components/SubstationsList";
+import { ContactsList } from "../components/ContactsList";
 
 export default function ClientPage() {
   const client: IClient = {
@@ -55,6 +59,17 @@ export default function ClientPage() {
   };
 
   return (
-    <div>ClientPage</div>
-  )
+    <>
+      <Flex gap='20px' direction='column' align='center'>
+        <Title fz='30px' size='h2'>
+          {client.name}
+        </Title>
+        <SubstationList substations={client.substations} />
+        <ContactsList contacts={client.contacts}>
+          Контакты для связи
+        </ContactsList>
+        <ContactsList contacts={client.people}>Персонал</ContactsList>
+      </Flex>
+    </>
+  );
 }
