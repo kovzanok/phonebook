@@ -2,6 +2,7 @@ import { substation } from "../../types";
 import { Title, Text } from "@mantine/core";
 import classNames from "./SubstationList.module.css";
 
+
 interface ISubstationListProps {
   substations: substation[];
 }
@@ -9,10 +10,10 @@ interface ISubstationListProps {
 export default function SubstationList({ substations }: ISubstationListProps) {
   return (
     <ul className={classNames["substation-list"]}>
-      {substations.map((substation, index) => (
+      {substations.map((substation,index) => (
         <li className={classNames["substation-item"]} key={index}>
           <Title size='h3'>{substation.name}</Title>
-          {substation.info && <Text fz='20px'>{substation.info}</Text>}
+          <Text fz='20px'>{substation.info}</Text>
         </li>
       ))}
     </ul>

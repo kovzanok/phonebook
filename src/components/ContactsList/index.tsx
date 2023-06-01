@@ -25,7 +25,7 @@ export const ContactsList = ({
               <li className={classNames["contacts-item"]}>
                 <ContactName contact={contact}/>
                 <AdresseeList list={contact.phones} />
-                <AdresseeList list={contact.destination} />
+                <AdresseeList list={contact.email} />
                 {"info" in contact && <Text fz='20px'>{contact.info}</Text>}
               </li>
             ))}
