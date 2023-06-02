@@ -32,11 +32,11 @@ export default function EditableSubstationList({
               )}
               <div className={classNames["inputs-wrapper"]}>
                 <TextInput
-                  placeholder='Название подстанции'
+                  placeholder='Подстанция'
                   value={substation.name}
                 />
                 <TextInput
-                  placeholder='Информация о фидерах'
+                  placeholder='Фидера'
                   value={substation.info}
                   fz='20px'
                 />

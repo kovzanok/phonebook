@@ -6,7 +6,7 @@ import classNames from "./EditableAdresseeList.module.css";
 
 interface IEditableAdresseeListProps {
   list: string[] | [];
-  placeholder: "Номер телефона" | "email/факс";
+  placeholder: "Телефон" | "Email/факс";
 }
 
 export default function EditableAdresseeList({

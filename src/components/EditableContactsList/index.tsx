@@ -34,16 +34,16 @@ export const EditableContactsList = ({
                 )}
                 <EditableContactName contact={contact} />
                 <EditableAdresseeList
-                  placeholder='Номер телефона'
+                  placeholder='Телефон'
                   list={contact.phones}
                 />
                 <EditableAdresseeList
-                  placeholder='email/факс'
+                  placeholder='Email/факс'
                   list={contact.email}
                 />
                 {"info" in contact && (
                   <TextInput
-                    placeholder='Дополнительная информация'
+                    placeholder='Примечание'
                     value={contact.info}
                   />
                 )}
