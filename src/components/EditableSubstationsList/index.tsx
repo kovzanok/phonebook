@@ -1,8 +1,13 @@
 import { substation } from "../../types";
-import { Button, TextInput } from "@mantine/core";
+import {
+  TextInput,
+  ActionIcon,
+  CloseButton,
+  Title,
+} from "@mantine/core";
 import classNames from "./EditableSubstationList.module.css";
 import { nanoid } from "nanoid/non-secure";
-
+import { IoIosAddCircleOutline } from "react-icons/io";
 
 interface ISubstationListProps {
   substations: substation[];
@@ -13,21 +18,30 @@ export default function EditableSubstationList({
 }: ISubstationListProps) {
   return (
     <div className={classNames["wrapper"]}>
-      <Button>Добавить ПС</Button>
       <ul className={classNames["substation-list"]}>
-        {substations.map((substation) => (
+        {substations.map((substation, index) => (
           <li className={classNames["substation-item"]} key={nanoid()}>
-            <TextInput
-              label='Питающая ПС'
-              required
-              placeholder='Название подстанции'
-              value={substation.name}
-            />
-            <TextInput
-              placeholder='Информация о фидерах'
-              value={substation.info}
-              fz='20px'
-            />
+            <Title ta='center' size='h4'>Питающая ПС</Title>
+            <div className={classNames["substation-item__wrapper"]}>              
+              {index === 0 ? (
+                <ActionIcon>
+                  <IoIosAddCircleOutline size='28px' />
+                </ActionIcon>
+              ) : (
+                <CloseButton size='28px' />
+              )}
+              <div className={classNames["inputs-wrapper"]}>
+                <TextInput
+                  placeholder='Название подстанции'
+                  value={substation.name}
+                />
+                <TextInput
+                  placeholder='Информация о фидерах'
+                  value={substation.info}
+                  fz='20px'
+                />
+              </div>
+            </div>
           </li>
         ))}
       </ul>

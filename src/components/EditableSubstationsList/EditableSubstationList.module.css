@@ -16,6 +16,22 @@
 .substation-item {
   display: flex;
   flex-direction: column;
+  row-gap: 10px;
+}
+
+.substation-item svg:hover {
+  color: #1c7ed6;
+}
+
+.substation-item__wrapper {
+  display: flex;
+  align-items: center;
+  column-gap: 10px;
+}
+
+.inputs-wrapper {
+  display: flex;
+  flex-direction: column;
   row-gap: 5px;
   text-align: center;
 }
