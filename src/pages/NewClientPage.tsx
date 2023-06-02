@@ -6,36 +6,21 @@ import { EditableContactsList } from "../components/EditableContactsList";
 
 const initialClient: NewClient = {
   name: "",
-  substations: [
-    { name: "", info: "" },
-    { name: "", info: "" },
-  ],
+  substations: [{ name: "", info: "" }],
   people: [
     {
       position: "Энергетик",
       name: "",
-      phones: ["", "", ""],
-      email: ["", ""],
-      info: "",
-    },
-    {
-      position: "Энергетик",
-      name: "",
-      phones: ["", ""],
-      email: ["", ""],
+      phones: [""],
+      email: [""],
       info: "",
     },
   ],
   contacts: [
     {
       name: "",
-      phones: ["", ""],
-      email: ["", "", ""],
-    },
-    {
-      name: "",
-      phones: ["", ""],
-      email: ["", "", ""],
+      phones: [""],
+      email: [""],
     },
   ],
 };
