@@ -46,7 +46,7 @@ export default function NewClientPage() {
       <form style={{ width: "100%",display:'flex',flexDirection:'column',rowGap:'10px' }}>
         <TextInput
           ta='center'
-          w='50%'
+          w='65%'
           m='0 auto'
           style={{ fontSize: "20px" }}
           placeholder='Название организации'

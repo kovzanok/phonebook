@@ -11,12 +11,14 @@
   padding: 0;
   align-items: center;
   column-gap: 15px;
+  overflow-x: auto;
 }
 
 .substation-item {
   display: flex;
   flex-direction: column;
   row-gap: 10px;
+  min-width: 180px;
 }
 
 .substation-item svg:hover {
