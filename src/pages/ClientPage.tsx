@@ -1,8 +1,10 @@
 import React from "react";
 import { IClient } from "../types";
-import { Title, Flex } from "@mantine/core";
+import { Title, Flex, ActionIcon } from "@mantine/core";
 import SubstationList from "../components/SubstationsList";
 import { ContactsList } from "../components/ContactsList";
+import { AiOutlineEdit, AiFillDelete } from "react-icons/ai";
+import { NavLink } from "react-router-dom";
 
 export default function ClientPage() {
   const client: IClient = {
@@ -45,9 +47,20 @@ export default function ClientPage() {
   return (
     <>
       <Flex gap='20px' direction='column' align='center'>
-        <Title fz='30px' size='h2'>
-          {client.name}
-        </Title>
+        <Flex gap='10px' align='end'>
+          <Title fz='30px' size='h2'>
+            {client.name}
+          </Title>
+          <ActionIcon variant='outline'>
+            <NavLink to='/1/edit'>
+              <AiOutlineEdit color='initial' size='30px' />
+            </NavLink>
+          </ActionIcon>
+          <ActionIcon variant='outline'>
+            <AiFillDelete color='#ed4c4c' size='30px' />
+          </ActionIcon>
+        </Flex>
+
         <SubstationList substations={client.substations} />
         <ContactsList contacts={client.contacts}>
           Контакты для связи
