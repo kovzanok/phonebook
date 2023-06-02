@@ -34,7 +34,7 @@ export default function LoginPage() {
                 rowGap: "10px",
               }}
             >
-              <TextInput withAsterisk label='Логин' placeholder='ods' />
+              <TextInput withAsterisk label='Логин' />
 
               <PasswordInput withAsterisk label='Пароль' />
 

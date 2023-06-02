@@ -34,7 +34,7 @@ export default function RegisterPage() {
                 rowGap: "10px",
               }}
             >
-              <TextInput withAsterisk label='Логин' placeholder='ods' />
+              <TextInput withAsterisk label='Логин' />
               <PasswordInput withAsterisk label='Пароль' />
               <PasswordInput withAsterisk label='Повторите пароль' />
               <Group position='center' mt='md'>
