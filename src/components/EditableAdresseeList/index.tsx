@@ -18,7 +18,7 @@ export default function EditableAdresseeList({
       {list?.map((item, index) => (
         <li className={classNames["adressee-item"]} key={nanoid()}>
           {index === 0 ? (
-            <ActionIcon>
+            <ActionIcon variant="transparent" disabled={list.length === 3}>
               <IoIosAddCircleOutline size='28px' />
             </ActionIcon>
           ) : (
