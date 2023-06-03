@@ -8,7 +8,9 @@ import {
   Group,
   Button,
 } from "@mantine/core";
-
+import { authContextValueType } from "../types";
+import { useContext } from "react";
+import { AuthContext } from "../context";
 interface IMyHeaderProps {
   opened: boolean;
   setOpened: React.Dispatch<React.SetStateAction<boolean>>;
@@ -16,6 +18,13 @@ interface IMyHeaderProps {
 }
 
 export default function MyHeader({ opened, setOpened, theme }: IMyHeaderProps) {
+  const [isAuth, setIsAuth] = useContext(AuthContext) as authContextValueType;
+
+  const logout = () => {
+    window.localStorage.removeItem("phonebook-token");
+    setIsAuth(false);
+  };
+
   return (
     <Header height={{ base: 80, md: 70 }} p='md'>
       <div
@@ -35,7 +44,7 @@ export default function MyHeader({ opened, setOpened, theme }: IMyHeaderProps) {
             color={theme.colors.gray[6]}
           />
         </MediaQuery>
-        <MediaQuery query="(max-width:430px)" styles={{ display: "none" }}>
+        <MediaQuery query='(max-width:430px)' styles={{ display: "none" }}>
           <Title m='auto' ta='center' size='h4'>
             Телефонный справочник потребителей
           </Title>
@@ -43,7 +52,7 @@ export default function MyHeader({ opened, setOpened, theme }: IMyHeaderProps) {
 
         <Group noWrap align='center' position='right'>
           <Text underline>ods</Text>
-          <Button>Выйти</Button>
+          <Button onClick={logout}>Выйти</Button>
         </Group>
       </div>
     </Header>
