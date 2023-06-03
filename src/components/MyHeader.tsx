@@ -10,7 +10,7 @@ import {
 } from "@mantine/core";
 import { authContextValueType } from "../types";
 import { useContext } from "react";
-import { AuthContext } from "../context";
+import { AuthContext, LoginContext } from "../context";
 interface IMyHeaderProps {
   opened: boolean;
   setOpened: React.Dispatch<React.SetStateAction<boolean>>;
@@ -19,7 +19,7 @@ interface IMyHeaderProps {
 
 export default function MyHeader({ opened, setOpened, theme }: IMyHeaderProps) {
   const [isAuth, setIsAuth] = useContext(AuthContext) as authContextValueType;
-
+  const login = useContext(LoginContext);
   const logout = () => {
     window.localStorage.removeItem("phonebook-token");
     setIsAuth(false);
@@ -51,7 +51,7 @@ export default function MyHeader({ opened, setOpened, theme }: IMyHeaderProps) {
         </MediaQuery>
 
         <Group noWrap align='center' position='right'>
-          <Text underline>ods</Text>
+          <Text underline>{login}</Text>
           <Button onClick={logout}>Выйти</Button>
         </Group>
       </div>
