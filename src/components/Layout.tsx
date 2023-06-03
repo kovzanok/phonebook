@@ -8,6 +8,13 @@ import MyNavBar from "./MyNavBar";
 import { authContextValueType } from "../types";
 import { AuthContext } from "../context";
 
+window.onunload = () => {
+  const pathname = window.location.pathname;
+  if (pathname !== "/login" && pathname !== "/register") {
+    window.sessionStorage.setItem("prevUrl", window.location.pathname);
+  }
+};
+
 export default function Layout() {
   const [opened, setOpened] = useState<boolean>(false);
   const theme: MantineTheme = useMantineTheme();

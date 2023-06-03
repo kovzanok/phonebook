@@ -38,7 +38,7 @@ export default function RegisterPage() {
     },
   });
   if (isAuth) {
-    return <Navigate to='/' />;
+    return <Navigate to={window.sessionStorage.getItem('prevUrl') || '/'} />;
   }
 
   const submitRegisterForm = async ({

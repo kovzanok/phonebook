@@ -22,6 +22,7 @@ export default function MyHeader({ opened, setOpened, theme }: IMyHeaderProps) {
   const [login] = useContext(LoginContext) as loginContextValueType;
   const logout = () => {
     window.localStorage.removeItem("phonebook-token");
+    window.sessionStorage.removeItem("prevUrl")
     setIsAuth(false);
   };
 

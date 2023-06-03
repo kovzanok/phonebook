@@ -23,7 +23,7 @@ export default function LoginPage() {
   const [isAuth, setIsAuth] = useContext(AuthContext) as authContextValueType;
   const [, setLogin] = useContext(LoginContext) as loginContextValueType;
   if (isAuth) {
-    return <Navigate to='/' />;
+    return <Navigate to={window.sessionStorage.getItem('prevUrl') || '/'} />;
   }
 
   const form = useForm({
