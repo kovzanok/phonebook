@@ -14,6 +14,10 @@ import {
 import { Link } from "react-router-dom";
 
 export default function LoginPage() {
+  const [isAuth, setIsAuth] = useContext(AuthContext) as authContextValueType;
+  if (isAuth) {
+    return <Navigate to='/' />;
+  }
   const form = useForm({
     initialValues: {
       login: "",
