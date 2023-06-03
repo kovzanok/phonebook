@@ -1,49 +1,32 @@
 import React from "react";
 import { IClient } from "../types";
-import { Title, Flex, ActionIcon } from "@mantine/core";
+import { Title, Flex, ActionIcon, Loader } from "@mantine/core";
 import SubstationList from "../components/SubstationsList";
 import { ContactsList } from "../components/ContactsList";
 import { AiOutlineEdit, AiFillDelete } from "react-icons/ai";
-import { NavLink } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { AxiosResponse } from "axios";
+import axios from "../axios/axios";
 
 export default function ClientPage() {
-  const client: IClient = {
-    id: 1,
-    name: "Дорорс",
-    substations: [
-      { name: "Заямное", info: "ф.1" },
-      { name: "qwe", info: "ф.1" },
-    ],
-    people: [
-      {
-        position: "Энергетик",
-        name: "Матушонок",
-        phones: ["80291654195"],
-        email: ["asdsa@asdas.asd"],
-        info: "не звонить",
-      },
-      {
-        position: "Энергетик",
-        name: "Матушонок",
-        phones: ["80291654195"],
-        email: ["asdsa@asdas.asd"],
-        info: "",
-      },
-    ],
-    contacts: [
-      {
-        name: "Для согласований",
-        phones: ["375-29-1654195", "672-02-12"],
-        email: ["123-40-23", "123-40-23"],
-      },
-      {
-        name: "Для согласований",
-        phones: ["672-02-12", "672-02-12"],
-        email: ["123-40-23", "123-40-23"],
-      },
-    ],
-  };
-
+  const { id } = useParams();
+  const [client, setClient] = useState<IClient | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  useEffect(() => {
+    setIsLoading(true);
+    axios.get(`/clients/${id}`).then((res: AxiosResponse) => {
+      setClient(res.data);
+      setIsLoading(false);
+    });
+  }, [id]);
+  if (isLoading || !client) {
+    return (
+      <Flex h='300px' align='center' justify='center'>
+        <Loader size='100px'/>
+      </Flex>
+    );
+  }
   return (
     <>
       <Flex gap='20px' direction='column' align='center'>
@@ -52,7 +35,7 @@ export default function ClientPage() {
             {client.name}
           </Title>
           <ActionIcon variant='outline'>
-            <NavLink to='/1/edit'>
+            <NavLink to={`/${id}/edit`}>
               <AiOutlineEdit color='initial' size='30px' />
             </NavLink>
           </ActionIcon>
