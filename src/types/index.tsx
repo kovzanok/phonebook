@@ -27,3 +27,4 @@ export type substation = {
 export type handleActiveFunction = (props: { isActive: boolean }) => string;
 
 export type authContextValueType = [boolean, React.Dispatch<React.SetStateAction<boolean>>];
+export type loginContextValueType = [string, React.Dispatch<React.SetStateAction<string>>];

@@ -11,16 +11,17 @@ import {
   Title,
 } from "@mantine/core";
 import { useContext } from "react";
-import { authContextValueType } from "../types";
 import { Link } from "react-router-dom";
-import { AuthContext } from "../context";
 import { Navigate } from "react-router-dom";
 import axios from "../axios/axios";
 import Axios from "axios";
 import { useForm } from "@mantine/form";
+import { authContextValueType, loginContextValueType } from "../types";
+import { AuthContext, LoginContext } from "../context";
 
 export default function LoginPage() {
   const [isAuth, setIsAuth] = useContext(AuthContext) as authContextValueType;
+  const [, setLogin] = useContext(LoginContext) as loginContextValueType;
   if (isAuth) {
     return <Navigate to='/' />;
   }
@@ -46,10 +47,11 @@ export default function LoginPage() {
     password: string;
   }) => {
     try {
-      const { token } = (await axios.post("/auth/login", { login, password }))
+      const { token,userLogin } = (await axios.post("/auth/login", { login, password }))
         .data;
       window.localStorage.setItem("phonebook-token", token);
       setIsAuth(true);
+      setLogin(userLogin);
     } catch (error) {
       if (Axios.isAxiosError(error)) {
         form.setFieldError("auth", error.response?.data.message);

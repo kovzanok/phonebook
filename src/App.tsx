@@ -26,7 +26,7 @@ function App() {
   }, []);
   return (
     <>
-      <LoginContext.Provider value={login}>
+      <LoginContext.Provider value={[login, setLogin]}>
         <AuthContext.Provider value={[isAuth, setIsAuth]}>
           <BrowserRouter>
             <Routes>

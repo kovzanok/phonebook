@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { authContextValueType } from "./types";
+import { authContextValueType, loginContextValueType } from "./types";
 
 export const AuthContext = createContext<authContextValueType | null>(null);
-export const LoginContext = createContext<string>("");
+export const LoginContext = createContext<loginContextValueType | null>(null);
