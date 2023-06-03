@@ -8,8 +8,10 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 
 function App() {
+  const [isAuth, setIsAuth] = useState<boolean>(false);
   return (
     <>
+      <AuthContext.Provider value={[isAuth, setIsAuth]}>
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<Layout></Layout>}>
@@ -22,6 +24,7 @@ function App() {
           <Route path='/register' element={<RegisterPage></RegisterPage>}></Route>
         </Routes>
       </BrowserRouter>
+      </AuthContext.Provider>
     </>
   );
 }
