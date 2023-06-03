@@ -14,6 +14,18 @@ import {
 import { Link } from "react-router-dom";
 
 export default function LoginPage() {
+  const form = useForm({
+    initialValues: {
+      login: "",
+      password: "",
+    },
+
+    validate: {
+      login: (value) => (value.length === 0 ? "Введите логин" : null),
+      password: (value) =>
+        value.length >= 5 ? null : "Минимальная длина пароля 5 символов",
+    },
+  });
   return (
     <Center h={"100vh"}>
       <Flex gap='lg' align='center' justify='center' direction='column'>
@@ -34,10 +46,17 @@ export default function LoginPage() {
                 rowGap: "10px",
               }}
             >
-              <TextInput withAsterisk label='Логин' />
+              <TextInput
+                withAsterisk
+                label='Логин'
+                {...form.getInputProps("login")}
+              />
 
-              <PasswordInput withAsterisk label='Пароль' />
-
+              <PasswordInput
+                withAsterisk
+                label='Пароль'
+                {...form.getInputProps("password")}
+              />
               <Group position='center' mt='md'>
                 <Button type='submit'>Войти</Button>
               </Group>
