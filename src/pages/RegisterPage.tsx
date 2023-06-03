@@ -11,9 +11,16 @@ import {
   Title,
 } from "@mantine/core";
 
+import { Link, Navigate } from "react-router-dom";
+import { authContextValueType } from "../types";  
+import { AuthContext } from "../context";
+import { useContext } from "react";
 import { useForm } from "@mantine/form";
+import axios from "../axios/axios";
+import Axios from "axios";
 
 export default function RegisterPage() {
+  const [isAuth, setIsAuth] = useContext(AuthContext) as authContextValueType;
   const form = useForm({
     initialValues: {
       login: "",
@@ -29,6 +36,30 @@ export default function RegisterPage() {
         value !== values.password ? "Пароли не совпадают" : null,
     },
   });
+  if (isAuth) {
+    return <Navigate to='/' />;
+  }
+
+  const submitRegisterForm = async ({
+    login,
+    password,
+  }: {
+    login: string;
+    password: string;
+  }) => {
+    try {
+      const { token } = (
+        await axios.post("/auth/registration", { login, password })
+      ).data;
+      window.localStorage.setItem("phonebook-token", token);
+      setIsAuth(true);
+    } catch (error) {
+      if (Axios.isAxiosError(error)) {
+        form.setFieldError("login", error.response?.data.message);
+      }
+    }
+  };
+
   return (
     <Center h={"100vh"}>
       <Flex gap='lg' align='center' justify='center' direction='column'>
@@ -43,6 +74,7 @@ export default function RegisterPage() {
             mx='auto'
           >
             <form
+              onSubmit={form.onSubmit(submitRegisterForm)}
               style={{
                 display: "flex",
                 flexDirection: "column",
