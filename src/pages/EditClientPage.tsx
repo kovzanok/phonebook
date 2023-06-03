@@ -1,48 +1,28 @@
-import React from 'react'
-import { IClient } from '../types';
-import NewClientPage from './NewClientPage';
+import React, { useEffect, useState } from "react";
+import { IClient } from "../types";
+import NewClientPage from "./NewClientPage";
+import { useParams } from "react-router-dom";
+import axios from "../axios/axios";
+import { AxiosResponse } from "axios";
+import { Flex, Loader } from "@mantine/core";
 
 export default function EditClientPage() {
-
-  //useEffect to get client
-  const clientToEdit: IClient = {
-    id: 1,
-    name: "Дорорс",
-    substations: [
-      { name: "Заямное", info: "ф.1" },
-      { name: "qwe", info: "ф.1" },
-    ],
-    people: [
-      {
-        position: "Энергетик",
-        name: "Матушонок",
-        phones: ["80291654195"],
-        email: ["asdsa@asdas.asd"],
-        info: "не звонить",
-      },
-      {
-        position: "Энергетик",
-        name: "Матушонок",
-        phones: ["80291654195"],
-        email: ["asdsa@asdas.asd"],
-        info: "",
-      },
-    ],
-    contacts: [
-      {
-        name: "Для согласований",
-        phones: ["375-29-1654195", "672-02-12"],
-        email: ["123-40-23", "123-40-23"],
-      },
-      {
-        name: "Для согласований",
-        phones: ["672-02-12", "672-02-12"],
-        email: ["123-40-23", "123-40-23"],
-      },
-    ],
-  };
-
-  return (
-    <NewClientPage client={clientToEdit}/>
-  )
+  const [clientToEdit, setClientToEdit] = useState<IClient | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const { id } = useParams();
+  useEffect(() => {
+    setIsLoading(true );
+    axios.get(`/clients/${id}`).then((res: AxiosResponse) => {
+      setClientToEdit(res.data);
+      setIsLoading(false);
+    });
+  }, [id]);
+  if (isLoading || !clientToEdit) {
+    return (
+      <Flex h='300px' align='center' justify='center'>
+        <Loader size='100px' />
+      </Flex>
+    );
+  }
+  return <NewClientPage client={clientToEdit} />;
 }
