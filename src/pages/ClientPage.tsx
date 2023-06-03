@@ -30,7 +30,7 @@ export default function ClientPage() {
   return (
     <>
       <Flex gap='20px' direction='column' align='center'>
-        <Flex gap='10px' align='end'>
+        <Flex gap='10px' align='center'>
           <Title fz='30px' size='h2'>
             {client.name}
           </Title>
