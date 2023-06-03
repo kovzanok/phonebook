@@ -1,19 +1,20 @@
-import { Outlet } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 
-import {
-  AppShell,
-  Text,
-  useMantineTheme,
-  MantineTheme,
-} from "@mantine/core";
+import { AppShell, Text, useMantineTheme, MantineTheme } from "@mantine/core";
 import MyFooter from "./MyFooter";
 import MyHeader from "./MyHeader";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import MyNavBar from "./MyNavBar";
+import { authContextValueType } from "../types";
+import { AuthContext } from "../context";
 
 export default function Layout() {
   const [opened, setOpened] = useState<boolean>(false);
   const theme: MantineTheme = useMantineTheme();
+  const [isAuth, setIsAuth] = useContext(AuthContext) as authContextValueType;
+  if (!isAuth) {
+    return <Navigate to='/login' />;
+  }
   return (
     <AppShell
       styles={{
