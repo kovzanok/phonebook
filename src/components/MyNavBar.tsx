@@ -2,84 +2,22 @@ import { Navbar, Button, Flex, TextInput } from "@mantine/core";
 import ClientsList from "./ClientsList";
 import NewClientLink from "./NewClientLink";
 import { IClient } from "../types";
+import { useEffect, useState } from "react";
+import axios from "../axios/axios";
+import { AxiosResponse } from "axios";
 
 interface IMyNavBarProps {
   opened: boolean;
 }
 
 export default function MyNavBar({ opened }: IMyNavBarProps) {
-  const clients: IClient[] = [
-    {
-      id: 1,
-      name: "Дорорс",
-      substations: [{ id: 1, name: "Заямное", info: "ф.1" }],
-      people: [
-        {
-          position: "Энергетик",
-          name: "Матушонок",
-          phones: [{ number: "123", id: 1 }],
-          info: "",
-          id: 1,
-        },
-      ],
-    },
-    {
-      id: 2,
-      name: "Дорорс",
-      substations: [{ id: 1, name: "Заямное", info: "ф.1" }],
-      people: [
-        {
-          position: "Энергетик",
-          name: "Матушонок",
-          phones: [{ number: "123", id: 1 }],
-          info: "",
-          id: 1,
-        },
-      ],
-    },
-    {
-      id: 3,
-      name: "Дорорс",
-      substations: [{ id: 1, name: "Заямное", info: "ф.1" }],
-      people: [
-        {
-          position: "Энергетик",
-          name: "Матушонок",
-          phones: [{ number: "123", id: 1 }],
-          info: "",
-          id: 1,
-        },
-      ],
-    },
-    {
-      id: 4,
-      name: "Дорорс",
-      substations: [{ id: 1, name: "Заямное", info: "ф.1" }],
-      people: [
-        {
-          position: "Энергетик",
-          name: "Матушонок",
-          phones: [{ number: "123", id: 1 }],
-          info: "",
-          id: 1,
-        },
-      ],
-    },
-    {
-      id: 5,
-      name: "Дорорс",
-      substations: [{ id: 1, name: "Заямное", info: "ф.1" }],
-      people: [
-        {
-          position: "Энергетик",
-          name: "Матушонок",
-          phones: [{ number: "123", id: 1 }],
-          info: "",
-          id: 1,
-        },
-      ],
-    },
-  ];
+  const [clients, setClients] = useState<IClient[]>([]);
+  useEffect(() => {
+    axios.get("/clients/all").then((res: AxiosResponse) => {
+      setClients(res.data);
+    });
+  }, []);
+
   return (
     <Navbar
       hidden={!opened}
