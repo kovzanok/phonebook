@@ -1,7 +1,7 @@
 export type NewClient = Omit<IClient, "id">;
 
 export interface IClient {
-  id: number;
+  _id: number;
   name: string;
   substations: substation[];
   people: IPerson[] | [];

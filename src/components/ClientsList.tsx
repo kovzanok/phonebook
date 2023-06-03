@@ -22,7 +22,7 @@ export default function ClientsList({ clients }: IClientsListProps) {
     >
       {clients.map(
         (client: IClient): React.ReactElement<IListItemProps> => (
-          <li style={{ width: "100%" }} key={client.id}>
+          <li style={{ width: "100%" }} key={client._id}>
             <ClientLink {...client} />
           </li>
         )

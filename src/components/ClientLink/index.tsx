@@ -4,11 +4,11 @@ import classNames from "./ClientLink.module.css";
 import { handleActiveFunction } from "../../types";
 
 interface IClientLinkProps {
-  id: number;
+  _id: number;
   name: string;
 }
 
-export default function ClientLink({ name, id }: IClientLinkProps) {
+export default function ClientLink({ name, _id }: IClientLinkProps) {
   const handleActive: handleActiveFunction = ({ isActive }) => {
     if (!isActive)
       return Object.values(classNames)
@@ -18,7 +18,7 @@ export default function ClientLink({ name, id }: IClientLinkProps) {
   };
 
   return (
-    <NavLink className={handleActive} to={`${id}`}>
+    <NavLink className={handleActive} to={`${_id}`}>
       {name}
     </NavLink>
   );
