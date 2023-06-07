@@ -9,9 +9,11 @@ import RegisterPage from "./pages/RegisterPage";
 import { useState, useEffect } from "react";
 import { AuthContext, LoginContext } from "./context";
 import axios from "./axios/axios";
+import { LoadingOverlay } from "@mantine/core";
 
 function App() {
   const [isAuth, setIsAuth] = useState<boolean>(false);
+  const [isAuthLoading, setIsAuthLoading] = useState<boolean>(true);
   const [login, setLogin] = useState<string>("");
   useEffect(() => {
     axios
@@ -19,11 +21,14 @@ function App() {
       .then((res) => {
         if (res.status === 200) {
           setLogin(res.data.login);
+
           setIsAuth(true);
         }
       })
-      .catch((err) => {});
+      .catch((err) => {})
+      .finally(() => setIsAuthLoading(false));
   }, []);
+  if (isAuthLoading) return <LoadingOverlay visible />;
   return (
     <>
       <LoginContext.Provider value={[login, setLogin]}>
