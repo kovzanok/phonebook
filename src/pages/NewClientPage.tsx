@@ -4,24 +4,28 @@ import { NewClient } from "../types";
 import EditableSubstationList from "../components/EditableSubstationsList";
 import { EditableContactsList } from "../components/EditableContactsList";
 import { createFormContext } from "@mantine/form";
+import { randomId } from "@mantine/hooks";
 
-const initialClient: NewClient = {
+const initialClient: IClient = {
+  _id: randomId(),
   name: "",
-  substations: [{ name: "", info: "" }],
+  substations: [{ _id: randomId(), name: "", info: "" }],
   people: [
     {
+      _id: randomId(),
       position: "Энергетик",
       name: "",
-      phones: [""],
-      email: [""],
+      phones: [{ value: "", _id: randomId() }],
+      email: [{ value: "", _id: randomId() }],
       info: "",
     },
   ],
   contacts: [
     {
+      _id: randomId(),
       name: "",
-      phones: [""],
-      email: [""],
+      phones: [{ value: "", _id: randomId() }],
+      email: [{ value: "", _id: randomId() }],
     },
   ],
 };
