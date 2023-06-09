@@ -3,6 +3,7 @@ import React from "react";
 import { NewClient } from "../types";
 import EditableSubstationList from "../components/EditableSubstationsList";
 import { EditableContactsList } from "../components/EditableContactsList";
+import { createFormContext } from "@mantine/form";
 
 const initialClient: NewClient = {
   name: "",
@@ -25,11 +26,20 @@ const initialClient: NewClient = {
   ],
 };
 
+const [FormProvider, useFormContext, useForm] = createFormContext<IClient>();
+
+export { useFormContext };
+
 export default function NewClientPage({ client = initialClient }) {
   const isEditMode = client !== initialClient;
+
+  const form = useForm({
+    initialValues: client,
+  });
+
   return (
     <Flex gap='20px' direction='column' align='center'>
-      <form style={{ width: "100%",display:'flex',flexDirection:'column',rowGap:'10px' }}>
+      <FormProvider form={form}>
         <TextInput
           ta='center'
           w='65%'
@@ -78,6 +88,7 @@ export default function NewClientPage({ client = initialClient }) {
           </Flex>
         )}
       </form>
+      </FormProvider>
     </Flex>
   );
 }
