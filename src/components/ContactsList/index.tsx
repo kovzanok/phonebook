@@ -22,7 +22,7 @@ export const ContactsList = ({
           </Title>
           <ul className={classNames["contacts-list"]}>
             {contacts.map((contact) => (
-              <li className={classNames["contacts-item"]}>
+              <li key={contact._id} className={classNames["contacts-item"]}>
                 <ContactName contact={contact} />
                 <AdresseeList list={contact.phones} />
                 <AdresseeList list={contact.email} />
