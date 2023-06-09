@@ -62,12 +62,10 @@ export default function NewClientPage({ client = initialClient }) {
           value={client.name}
         />
           <EditableSubstationList />
-        <EditableContactsList contacts={client.contacts}>
+          <EditableContactsList list={"contacts"}>
           Контакты для связи
         </EditableContactsList>
-        <EditableContactsList contacts={client.people}>
-          Персонал
-        </EditableContactsList>
+          <EditableContactsList list={"people"}>Персонал</EditableContactsList>
         {isEditMode ? (
           <Flex mt='20px' justify='center' gap='20px'>
             <Button fz='20px' type='submit' color='green'>

@@ -1,30 +1,61 @@
 import { ActionIcon, CloseButton, TextInput } from "@mantine/core";
 import React from "react";
-import { nanoid } from "nanoid";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import classNames from "./EditableAdresseeList.module.css";
+import { randomId } from "@mantine/hooks";
+
+import { useFormContext } from "../../pages/NewClientPage";
 
 interface IEditableAdresseeListProps {
-  list: string[] | [];
+  index: number;
   placeholder: "Телефон" | "Email/факс";
+  listName: "contacts" | "people";
 }
 
 export default function EditableAdresseeList({
-  list,
+  index,
   placeholder,
+  listName,
 }: IEditableAdresseeListProps) {
+  const form = useFormContext();
+  const listType = placeholder === "Телефон" ? "phones" : "email";
+  const list = form.values[listName][index][listType];
+
+  const addAdressee = (): void => {
+    form.insertListItem(`${listName}.${index}.${listType}`, {
+      value: "",
+      _id: randomId(),
+    });
+  };
+
+  const removeAdressee = (itemIndex: number): void => {
+    form.removeListItem(`${listName}.${index}.${listType}`, itemIndex);
+  };
+
   return (
     <ul className={classNames["adressee-list"]}>
-      {list?.map((item, index) => (
-        <li className={classNames["adressee-item"]} key={nanoid()}>
-          {index === 0 ? (
-            <ActionIcon variant="transparent" disabled={list.length === 3}>
+      {list?.map((item, itemIndex) => (
+        <li key={item._id} className={classNames["adressee-item"]}>
+          {itemIndex === 0 ? (
+            <ActionIcon
+              onClick={addAdressee}
+              variant='transparent'
+              disabled={list.length === 3}
+            >
               <IoIosAddCircleOutline size='28px' />
             </ActionIcon>
           ) : (
-            <CloseButton size='28px' />
+            <CloseButton
+              onClick={() => removeAdressee(itemIndex)}
+              size='28px'
+            />
           )}
-          <TextInput placeholder={placeholder} value={item} />
+          <TextInput
+            placeholder={placeholder}
+            {...form.getInputProps(
+              `${listName}.${index}.${listType}.${itemIndex}.value`
+            )}
+          />
         </li>
       ))}
     </ul>
