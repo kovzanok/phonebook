@@ -57,7 +57,7 @@ export default function NewClientPage({ client = initialClient }) {
           }
           value={client.name}
         />
-        <EditableSubstationList substations={client.substations} />
+          <EditableSubstationList />
         <EditableContactsList contacts={client.contacts}>
           Контакты для связи
         </EditableContactsList>

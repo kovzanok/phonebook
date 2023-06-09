@@ -1,43 +1,48 @@
-import { substation } from "../../types";
-import {
-  TextInput,
-  ActionIcon,
-  CloseButton,
-  Title,
-} from "@mantine/core";
+import React from "react";
+import { TextInput, ActionIcon, CloseButton, Title } from "@mantine/core";
 import classNames from "./EditableSubstationList.module.css";
-import { nanoid } from "nanoid/non-secure";
 import { IoIosAddCircleOutline } from "react-icons/io";
+import { useFormContext } from "../../pages/NewClientPage";
 
-interface ISubstationListProps {
-  substations: substation[];
-}
+import { randomId } from "@mantine/hooks";
 
-export default function EditableSubstationList({
-  substations,
-}: ISubstationListProps) {
+export default function EditableSubstationList() {
+  const form = useFormContext();
+  const addSubstation = () => {
+    form.insertListItem("substations", { _id: randomId(), name: "", info: "" });
+  };
+
+  const removeSubstation = (index: number) => {
+    form.removeListItem("substations", index);
+  };
+
   return (
     <div className={classNames["wrapper"]}>
       <ul className={classNames["substation-list"]}>
-        {substations.map((substation, index) => (
-          <li className={classNames["substation-item"]} key={nanoid()}>
-            <Title ta='center' size='h4'>Питающая ПС</Title>
-            <div className={classNames["substation-item__wrapper"]}>              
+        {form.values.substations.map((substation, index) => (
+          <li key={substation._id} className={classNames["substation-item"]}>
+            <Title ta='center' size='h4'>
+              Питающая ПС
+            </Title>
+            <div className={classNames["substation-item__wrapper"]}>
               {index === 0 ? (
-                <ActionIcon>
+                <ActionIcon onClick={addSubstation}>
                   <IoIosAddCircleOutline size='28px' />
                 </ActionIcon>
               ) : (
-                <CloseButton size='28px' />
+                <CloseButton
+                  onClick={() => removeSubstation(index)}
+                  size='28px'
+                />
               )}
               <div className={classNames["inputs-wrapper"]}>
                 <TextInput
                   placeholder='Подстанция'
-                  value={substation.name}
+                  {...form.getInputProps(`substations.${index}.name`)}
                 />
                 <TextInput
                   placeholder='Фидера'
-                  value={substation.info}
+                  {...form.getInputProps(`substations.${index}.info`)}
                   fz='20px'
                 />
               </div>
