@@ -1,7 +1,5 @@
-export type NewClient = Omit<IClient, "id">;
-
 export interface IClient {
-  _id: number;
+  _id: string;
   name: string;
   substations: substation[];
   people: IPerson[] | [];
@@ -14,14 +12,21 @@ export interface IPerson extends IContact {
 }
 
 export interface IContact {
+  _id:string;
   name: string;
-  phones: string[] | []
-  email: string[] | [];
+  phones: adressee[];
+  email: adressee[];
+}
+
+export type adressee = {
+  value:string;
+  _id:string;
 }
 
 export type substation = {
   name: string;
   info: string;
+  _id:string;
 };
 
 export type handleActiveFunction = (props: { isActive: boolean }) => string;
