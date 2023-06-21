@@ -36,11 +36,3 @@ export type LoginParams = {
   password: string;
 };
 
-export type authContextValueType = [
-  boolean,
-  React.Dispatch<React.SetStateAction<boolean>>
-];
-export type loginContextValueType = [
-  string,
-  React.Dispatch<React.SetStateAction<string>>
-];
