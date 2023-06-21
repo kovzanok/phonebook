@@ -10,14 +10,9 @@ import {
   MediaQuery,
   Title,
 } from "@mantine/core";
-import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { Navigate } from "react-router-dom";
-import axios from "../axios/axios";
-import Axios from "axios";
 import { useForm } from "@mantine/form";
-import { authContextValueType, loginContextValueType } from "../types";
-import { AuthContext, LoginContext } from "../context";
 import { useAppDispatch } from "../store/store";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
@@ -27,8 +22,6 @@ import { LoginParams } from "../types";
 export default function LoginPage() {
   const auth = useSelector((state: RootState) => state.auth);
   const dispatch = useAppDispatch();
-  // const [isAuth, setIsAuth] = useContext(AuthContext) as authContextValueType;
-  // const [, setLogin] = useContext(LoginContext) as loginContextValueType;
   if (auth.isAuth) {
     return <Navigate to={window.sessionStorage.getItem("prevUrl") || "/"} />;
   }
