@@ -12,24 +12,35 @@ export interface IPerson extends IContact {
 }
 
 export interface IContact {
-  _id:string;
+  _id: string;
   name: string;
   phones: adressee[];
   email: adressee[];
 }
 
 export type adressee = {
-  value:string;
-  _id:string;
-}
+  value: string;
+  _id: string;
+};
 
 export type substation = {
   name: string;
   info: string;
-  _id:string;
+  _id: string;
 };
 
 export type handleActiveFunction = (props: { isActive: boolean }) => string;
 
-export type authContextValueType = [boolean, React.Dispatch<React.SetStateAction<boolean>>];
-export type loginContextValueType = [string, React.Dispatch<React.SetStateAction<string>>];
+export type LoginParams = {
+  login: string;
+  password: string;
+};
+
+export type authContextValueType = [
+  boolean,
+  React.Dispatch<React.SetStateAction<boolean>>
+];
+export type loginContextValueType = [
+  string,
+  React.Dispatch<React.SetStateAction<string>>
+];

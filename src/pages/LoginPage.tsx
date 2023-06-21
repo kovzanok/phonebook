@@ -18,12 +18,19 @@ import Axios from "axios";
 import { useForm } from "@mantine/form";
 import { authContextValueType, loginContextValueType } from "../types";
 import { AuthContext, LoginContext } from "../context";
+import { useAppDispatch } from "../store/store";
+import { useSelector } from "react-redux";
+import { RootState } from "../store/store";
+import { fetchLogin } from "../store/authSlice";
+import { LoginParams } from "../types";
 
 export default function LoginPage() {
-  const [isAuth, setIsAuth] = useContext(AuthContext) as authContextValueType;
-  const [, setLogin] = useContext(LoginContext) as loginContextValueType;
-  if (isAuth) {
-    return <Navigate to={window.sessionStorage.getItem('prevUrl') || '/'} />;
+  const auth = useSelector((state: RootState) => state.auth);
+  const dispatch = useAppDispatch();
+  // const [isAuth, setIsAuth] = useContext(AuthContext) as authContextValueType;
+  // const [, setLogin] = useContext(LoginContext) as loginContextValueType;
+  if (auth.isAuth) {
+    return <Navigate to={window.sessionStorage.getItem("prevUrl") || "/"} />;
   }
 
   const form = useForm({
@@ -39,23 +46,14 @@ export default function LoginPage() {
     },
   });
 
-  const submitLoginForm = async ({
-    login,
-    password,
-  }: {
-    login: string;
-    password: string;
-  }) => {
+  const submitLoginForm = async ({ login, password }: LoginParams) => {
     try {
-      const { token,userLogin } = (await axios.post("/auth/login", { login, password }))
-        .data;
+      const { token } = await dispatch(
+        fetchLogin({ login, password })
+      ).unwrap();
       window.localStorage.setItem("phonebook-token", token);
-      setIsAuth(true);
-      setLogin(userLogin);
-    } catch (error) {
-      if (Axios.isAxiosError(error)) {
-        form.setFieldError("auth", error.response?.data.message);
-      }
+    } catch {
+      form.setFieldError("auth", <Text>Ошибка авторизации</Text>);
     }
   };
 
@@ -91,9 +89,7 @@ export default function LoginPage() {
                 label='Пароль'
                 {...form.getInputProps("password")}
               />
-              <Text ta='center' color='red'>
-                {form.errors.auth}
-              </Text>
+              <Text>{form.errors.auth}</Text>
               <Group position='center' mt='md'>
                 <Button type='submit'>Войти</Button>
               </Group>

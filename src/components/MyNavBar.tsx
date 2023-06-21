@@ -5,7 +5,9 @@ import { IClient } from "../types";
 import { useEffect, useState } from "react";
 import axios from "../axios/axios";
 import { AxiosResponse } from "axios";
-import { useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
+import { useForm } from "@mantine/form";
+import { useSearchParams } from "react-router-dom";
 
 interface IMyNavBarProps {
   opened: boolean;
@@ -14,11 +16,24 @@ interface IMyNavBarProps {
 export default function MyNavBar({ opened }: IMyNavBarProps) {
   const [clients, setClients] = useState<IClient[]>([]);
   const location = useLocation();
+  const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const form = useForm({
+    initialValues: Object.fromEntries(searchParams.entries()),
+  });
+
   useEffect(() => {
-    axios.get("/clients/all").then((res: AxiosResponse) => {
-      setClients(res.data);
-    });
-  }, [location.pathname]);
+    axios
+      .get("/clients/all", { params: form.values })
+      .then((res: AxiosResponse) => {
+        setClients(res.data);
+      });
+  }, [location]);
+
+  const handleSubmit = () => {
+    setSearchParams(form.values);
+  };
 
   return (
     <Navbar
@@ -29,13 +44,18 @@ export default function MyNavBar({ opened }: IMyNavBarProps) {
     >
       <Flex direction='column' align='center' gap='15px'>
         <form
+          onSubmit={form.onSubmit(handleSubmit)}
           style={{
             borderBottom: "1px solid rgb(218 221 224",
             paddingBottom: "20px",
           }}
         >
           <Flex justify='center' align='center' gap='15px'>
-            <TextInput width='30em' placeholder='Поиск'></TextInput>
+            <TextInput
+              width='30em'
+              {...form.getInputProps("search")}
+              placeholder='Поиск'
+            />
             <Button type='submit'>Поиск</Button>
           </Flex>
         </form>
