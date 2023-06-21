@@ -59,10 +59,6 @@ const authSlice = createSlice({
       state.isLoading = "finished";
       console.log(action.payload);
     });
-    builder.addCase(fetchRegistration.pending, (state, action) => {
-      state.isLoading = "loading";
-      console.log(action.payload);
-    });
     builder.addCase(fetchLogin.fulfilled, (state, action) => {
       state.isAuth = true;
       state.login = action.payload.userLogin;
