@@ -1,12 +1,9 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import classNames from "./ClientLink.module.css";
-import { handleActiveFunction } from "../../types";
+import { IClient, handleActiveFunction } from "../../types";
 
-interface IClientLinkProps {
-  _id: number;
-  name: string;
-}
+type IClientLinkProps = Pick<IClient, "_id" | "name">;
 
 export default function ClientLink({ name, _id }: IClientLinkProps) {
   const handleActive: handleActiveFunction = ({ isActive }) => {
