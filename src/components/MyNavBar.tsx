@@ -5,6 +5,7 @@ import { IClient } from "../types";
 import { useEffect, useState } from "react";
 import axios from "../axios/axios";
 import { AxiosResponse } from "axios";
+import { useLocation } from "react-router";
 
 interface IMyNavBarProps {
   opened: boolean;
@@ -12,11 +13,12 @@ interface IMyNavBarProps {
 
 export default function MyNavBar({ opened }: IMyNavBarProps) {
   const [clients, setClients] = useState<IClient[]>([]);
+  const location = useLocation();
   useEffect(() => {
     axios.get("/clients/all").then((res: AxiosResponse) => {
       setClients(res.data);
     });
-  }, []);
+  }, [location.pathname]);
 
   return (
     <Navbar
