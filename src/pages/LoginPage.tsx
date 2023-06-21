@@ -19,9 +19,9 @@ import { authSelector, fetchLogin } from "../store/authSlice";
 import { LoginParams } from "../types";
 
 export default function LoginPage() {
-  
   const auth = useSelector(authSelector);
   const dispatch = useAppDispatch();
+  
   if (auth.isAuth) {
     return <Navigate to={window.sessionStorage.getItem("prevUrl") || "/"} />;
   }
@@ -82,7 +82,9 @@ export default function LoginPage() {
                 label='Пароль'
                 {...form.getInputProps("password")}
               />
-              <Text>{form.errors.auth}</Text>
+              <Text color='red' ta='center'>
+                {form.errors.auth}
+              </Text>
               <Group position='center' mt='md'>
                 <Button type='submit'>Войти</Button>
               </Group>
