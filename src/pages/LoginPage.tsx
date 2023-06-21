@@ -21,10 +21,6 @@ import { LoginParams } from "../types";
 export default function LoginPage() {
   const auth = useSelector(authSelector);
   const dispatch = useAppDispatch();
-  
-  if (auth.isAuth) {
-    return <Navigate to={window.sessionStorage.getItem("prevUrl") || "/"} />;
-  }
 
   const form = useForm({
     initialValues: {
@@ -49,6 +45,10 @@ export default function LoginPage() {
       form.setFieldError("auth", <Text>Ошибка авторизации</Text>);
     }
   };
+
+  if (auth.isAuth) {
+    return <Navigate to={window.sessionStorage.getItem("prevUrl") || "/"} />;
+  }
 
   return (
     <Center h={"100vh"}>

@@ -37,9 +37,6 @@ export default function RegisterPage() {
         value !== values.password ? "Пароли не совпадают" : null,
     },
   });
-  if (auth.isAuth) {
-    return <Navigate to={window.sessionStorage.getItem("prevUrl") || "/"} />;
-  }
 
   const submitRegisterForm = async ({ login, password }: LoginParams) => {
     try {
@@ -51,6 +48,10 @@ export default function RegisterPage() {
       form.setFieldError("auth", <Text>Ошибка регистрации</Text>);
     }
   };
+
+  if (auth.isAuth) {
+    return <Navigate to={window.sessionStorage.getItem("prevUrl") || "/"} />;
+  }
 
   return (
     <Center h={"100vh"}>
