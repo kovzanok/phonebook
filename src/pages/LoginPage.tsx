@@ -17,6 +17,7 @@ import { useAppDispatch } from "../store/store";
 import { useSelector } from "react-redux";
 import { authSelector, fetchLogin } from "../store/authSlice";
 import { LoginParams } from "../types";
+import { SerializedError } from "@reduxjs/toolkit";
 
 export default function LoginPage() {
   const auth = useSelector(authSelector);
@@ -37,12 +38,12 @@ export default function LoginPage() {
 
   const submitLoginForm = async ({ login, password }: LoginParams) => {
     try {
-      const { token } = await dispatch(
-        fetchLogin({ login, password })
-      ).unwrap();
-      window.localStorage.setItem("phonebook-token", token);
-    } catch {
-      form.setFieldError("auth", <Text>Ошибка авторизации</Text>);
+      const res = await dispatch(fetchLogin({ login, password })).unwrap();
+      if (res?.token) {
+        window.localStorage.setItem("phonebook-token", res.token);
+      }
+    } catch (err) {
+      form.setFieldError("auth", <Text>{(err as SerializedError).message}</Text>);
     }
   };
 

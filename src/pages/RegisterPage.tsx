@@ -17,6 +17,7 @@ import { useForm } from "@mantine/form";
 import { useAppDispatch } from "../store/store";
 import { useSelector } from "react-redux";
 import { authSelector, fetchRegistration } from "../store/authSlice";
+import { SerializedError } from "@reduxjs/toolkit";
 
 export default function RegisterPage() {
   const auth = useSelector(authSelector);
@@ -40,12 +41,12 @@ export default function RegisterPage() {
 
   const submitRegisterForm = async ({ login, password }: LoginParams) => {
     try {
-      const { token } = await dispatch(
-        fetchRegistration({ login, password })
-      ).unwrap();
-      window.localStorage.setItem("phonebook-token", token);
-    } catch {
-      form.setFieldError("auth", <Text>Ошибка регистрации</Text>);
+      const res = await dispatch(fetchRegistration({ login, password })).unwrap();
+      if (res?.token) {
+        window.localStorage.setItem("phonebook-token", res.token);
+      }
+    } catch(err) {
+      form.setFieldError("auth", <Text>{(err as SerializedError).message}</Text>);
     }
   };
 

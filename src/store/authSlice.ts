@@ -1,33 +1,55 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "../axios/axios";
+import myAxios from "../axios/axios";
 import { LoginParams } from "../types";
 import { RootState } from "./store";
+import axios, { AxiosResponse } from "axios";
 
 type LoginResponse = { userLogin: string; token: string };
 
 export const fetchRegistration = createAsyncThunk(
   "auth/registration",
   async (params: LoginParams) => {
-    const { data } = await axios.post("/auth/registration", params);
-    return data;
+    try {
+      const { data }: { data: LoginResponse } = await myAxios.post(
+        "/auth/registration",
+        params
+      );
+      return data;
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+        const response: AxiosResponse<ErrorMessage, any> = error.response;
+        throw new Error(response.data.message);
+      }
+    }
   }
 );
 
+type ErrorMessage = {
+  message: string;
+};
+
 export const fetchLogin = createAsyncThunk(
   "auth/login",
-  async (params: LoginParams): Promise<LoginResponse> => {
-    const { data }: { data: LoginResponse } = await axios.post(
-      "/auth/login",
-      params
-    );
-    return data;
+  async (params: LoginParams) => {
+    try {
+      const { data }: { data: LoginResponse } = await myAxios.post(
+        "/auth/login",
+        params
+      );
+      return data;
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+        const response: AxiosResponse<ErrorMessage, any> = error.response;
+        throw new Error(response.data.message);
+      }
+    }
   }
 );
 
 export const verifyAuth = createAsyncThunk(
   "auth/verify",
   async (): Promise<{ login: string }> => {
-    const { data } = await axios.get("/auth/verify");
+    const { data } = await myAxios.get("/auth/verify");
     return data;
   }
 );
@@ -60,8 +82,10 @@ const authSlice = createSlice({
       console.log(action.payload);
     });
     builder.addCase(fetchLogin.fulfilled, (state, action) => {
-      state.isAuth = true;
-      state.login = action.payload.userLogin;
+      if (action.payload) {
+        state.isAuth = true;
+        state.login = action.payload.userLogin;
+      }
     });
     builder.addCase(verifyAuth.fulfilled, (state, action) => {
       state.isAuth = true;
