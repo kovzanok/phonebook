@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "../axios/axios";
-import { AxiosError } from "axios";
 import { LoginParams } from "../types";
+import { RootState } from "./store";
 
 type LoginResponse = { userLogin: string; token: string };
 
@@ -82,5 +82,7 @@ const authSlice = createSlice({
 });
 
 export const { logout } = authSlice.actions;
+
+export const authSelector = (state: RootState) => state.auth;
 
 export default authSlice.reducer;

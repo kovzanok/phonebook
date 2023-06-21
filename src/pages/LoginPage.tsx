@@ -15,12 +15,12 @@ import { Navigate } from "react-router-dom";
 import { useForm } from "@mantine/form";
 import { useAppDispatch } from "../store/store";
 import { useSelector } from "react-redux";
-import { RootState } from "../store/store";
-import { fetchLogin } from "../store/authSlice";
+import { authSelector, fetchLogin } from "../store/authSlice";
 import { LoginParams } from "../types";
 
 export default function LoginPage() {
-  const auth = useSelector((state: RootState) => state.auth);
+  
+  const auth = useSelector(authSelector);
   const dispatch = useAppDispatch();
   if (auth.isAuth) {
     return <Navigate to={window.sessionStorage.getItem("prevUrl") || "/"} />;
