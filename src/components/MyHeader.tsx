@@ -8,9 +8,10 @@ import {
   Group,
   Button,
 } from "@mantine/core";
-import { authContextValueType, loginContextValueType } from "../types";
-import { useContext } from "react";
-import { AuthContext, LoginContext } from "../context";
+import { authSelector, logout } from "../store/authSlice";
+import { useSelector } from "react-redux";
+import { useAppDispatch } from "../store/store";
+
 interface IMyHeaderProps {
   opened: boolean;
   setOpened: React.Dispatch<React.SetStateAction<boolean>>;
@@ -18,12 +19,12 @@ interface IMyHeaderProps {
 }
 
 export default function MyHeader({ opened, setOpened, theme }: IMyHeaderProps) {
-  const [isAuth, setIsAuth] = useContext(AuthContext) as authContextValueType;
-  const [login] = useContext(LoginContext) as loginContextValueType;
-  const logout = () => {
+  const auth = useSelector(authSelector);
+  const dispatch = useAppDispatch();
+  const handleLogout = () => {
     window.localStorage.removeItem("phonebook-token");
-    window.sessionStorage.removeItem("prevUrl")
-    setIsAuth(false);
+    window.sessionStorage.removeItem("prevUrl");
+    dispatch(logout());
   };
 
   return (
@@ -52,8 +53,8 @@ export default function MyHeader({ opened, setOpened, theme }: IMyHeaderProps) {
         </MediaQuery>
 
         <Group noWrap align='center' position='right'>
-          <Text underline>{login}</Text>
-          <Button onClick={logout}>Выйти</Button>
+          <Text underline>{auth.login}</Text>
+          <Button onClick={handleLogout}>Выйти</Button>
         </Group>
       </div>
     </Header>
