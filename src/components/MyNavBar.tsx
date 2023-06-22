@@ -3,7 +3,7 @@ import ClientsList from "./ClientsList";
 import NewClientLink from "./NewClientLink";
 import { useEffect } from "react";
 import { useForm } from "@mantine/form";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { clientsSelector, fetchClients } from "../store/clientsSlice";
 import { useSelector } from "react-redux";
 import { useAppDispatch } from "../store/store";
@@ -16,7 +16,7 @@ export default function MyNavBar({ opened }: IMyNavBarProps) {
   const dispatch = useAppDispatch();
   const clients = useSelector(clientsSelector);
   const [searchParams, setSearchParams] = useSearchParams();
-  
+  const navigate = useNavigate();
   const form = useForm({
     initialValues: Object.fromEntries(searchParams.entries()),
   });
@@ -25,8 +25,16 @@ export default function MyNavBar({ opened }: IMyNavBarProps) {
     dispatch(fetchClients(searchParams));
   }, []);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     setSearchParams(form.values);
+    const newSearchParams = new URLSearchParams(form.values);
+    const data = await dispatch(fetchClients(newSearchParams)).unwrap();
+    if (data.length === 0) {
+      navigate(`/?${newSearchParams.toString()}`);
+    } else {
+      const firstId = data[0]._id;
+      navigate(`${firstId}/?${newSearchParams.toString()}`);
+    }
   };
 
   return (
