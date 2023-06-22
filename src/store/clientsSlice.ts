@@ -25,10 +25,10 @@ const clientsSlice = createSlice({
       state.push(action.payload);
     },
     updateClient: (state, action: PayloadAction<IClient>) => {
-      let clientToUpdate = state.find(
-        (client) => client._id === action.payload._id
-      );
-      clientToUpdate = action.payload;
+      return state.map((client) => {
+        if (client._id === action.payload._id) return action.payload;
+        return client;
+      });
     },
     removeClient: (state, action: PayloadAction<string>) =>
       state.filter((client) => client._id !== action.payload),
