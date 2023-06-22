@@ -10,7 +10,10 @@ import { authSelector } from "../store/authSlice";
 window.onunload = () => {
   const pathname = window.location.pathname;
   if (pathname !== "/login" && pathname !== "/register") {
-    window.sessionStorage.setItem("prevUrl", window.location.pathname);
+    window.sessionStorage.setItem(
+      "prevUrl",
+      window.location.pathname + window.location.search
+    );
   }
 };
 
