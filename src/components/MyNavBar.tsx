@@ -1,35 +1,29 @@
 import { Navbar, Button, Flex, TextInput } from "@mantine/core";
 import ClientsList from "./ClientsList";
 import NewClientLink from "./NewClientLink";
-import { IClient } from "../types";
-import { useEffect, useState } from "react";
-import axios from "../axios/axios";
-import { AxiosResponse } from "axios";
-import { useLocation, useNavigate } from "react-router";
+import { useEffect } from "react";
 import { useForm } from "@mantine/form";
 import { useSearchParams } from "react-router-dom";
+import { clientsSelector, fetchClients } from "../store/clientsSlice";
+import { useSelector } from "react-redux";
+import { useAppDispatch } from "../store/store";
 
 interface IMyNavBarProps {
   opened: boolean;
 }
 
 export default function MyNavBar({ opened }: IMyNavBarProps) {
-  const [clients, setClients] = useState<IClient[]>([]);
-  const location = useLocation();
-  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const clients = useSelector(clientsSelector);
   const [searchParams, setSearchParams] = useSearchParams();
-
+  
   const form = useForm({
     initialValues: Object.fromEntries(searchParams.entries()),
   });
 
   useEffect(() => {
-    axios
-      .get("/clients/all", { params: form.values })
-      .then((res: AxiosResponse) => {
-        setClients(res.data);
-      });
-  }, [location]);
+    dispatch(fetchClients(searchParams));
+  }, []);
 
   const handleSubmit = () => {
     setSearchParams(form.values);
