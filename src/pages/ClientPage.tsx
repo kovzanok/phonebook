@@ -9,13 +9,15 @@ import { useState, useEffect } from "react";
 import { AxiosResponse } from "axios";
 import axios from "../axios/axios";
 import { modals } from "@mantine/modals";
+import { useAppDispatch } from "../store/store";
+import { removeClient } from "../store/clientsSlice";
 
 export default function ClientPage() {
   const { id } = useParams();
   const [client, setClient] = useState<IClient | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const navigate = useNavigate();
-
+  const dispatch = useAppDispatch();
   useEffect(() => {
     setIsLoading(true);
     axios.get(`/clients/${id}`).then((res: AxiosResponse) => {
@@ -44,6 +46,9 @@ export default function ClientPage() {
 
   const deleteContact = async () => {
     await axios.delete(`clients/${id}`);
+    if (id) {
+      dispatch(removeClient(id));
+    }
     navigate("/");
   };
 

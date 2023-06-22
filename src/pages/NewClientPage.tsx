@@ -1,13 +1,14 @@
 import { Button, Flex, TextInput } from "@mantine/core";
-import React from "react";
 import axios from "../axios/axios";
-
 import { IClient, adressee } from "../types";
 import EditableSubstationList from "../components/EditableSubstationsList";
 import { EditableContactsList } from "../components/EditableContactsList";
 import { createFormContext, isNotEmpty } from "@mantine/form";
 import { randomId } from "@mantine/hooks";
 import { useNavigate } from "react-router";
+import { addClient, updateClient } from "../store/clientsSlice";
+import { useAppDispatch } from "../store/store";
+
 
 const initialClient: IClient = {
   _id: randomId(),
@@ -62,6 +63,7 @@ const validatePhoneAndEmailField = (
 };
 
 export default function NewClientPage({ client = initialClient }) {
+  const dispatch = useAppDispatch();
   const isEditMode = client !== initialClient;
   const navigate = useNavigate();
   const form = useForm({
@@ -94,11 +96,13 @@ export default function NewClientPage({ client = initialClient }) {
   });
 
   const handleSubmit = async () => {
-    let data;
+    let data: IClient;
     if (isEditMode) {
       ({ data } = await axios.put(`clients/${form.values._id}`, form.values));
+      dispatch(updateClient(data));
     } else {
       ({ data } = await axios.post("clients/new", form.values));
+      dispatch(addClient(data));
     }
     navigate(`/${data._id}`, { replace: true });
   };
