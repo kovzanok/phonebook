@@ -37,12 +37,13 @@ export default function EditableAdresseeList({
       {list?.map((item, itemIndex) => (
         <li key={item._id} className={classNames["adressee-item"]}>
           {itemIndex === 0 ? (
-            <ActionIcon
+            <ActionIcon 
+              size={'xl'}
               onClick={addAdressee}
               variant='transparent'
               disabled={list.length === 3}
             >
-              <IoIosAddCircleOutline size='28px' />
+              <IoIosAddCircleOutline size='40px' />
             </ActionIcon>
           ) : (
             <CloseButton
@@ -51,6 +52,7 @@ export default function EditableAdresseeList({
             />
           )}
           <TextInput
+          size="lg"
             placeholder={placeholder}
             {...form.getInputProps(
               `${listName}.${index}.${listType}.${itemIndex}.value`

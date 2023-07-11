@@ -120,6 +120,7 @@ export default function NewClientPage({ client = initialClient }) {
           }}
         >
           <TextInput
+            size="lg"
             ta='center'
             w='65%'
             m='0 auto'

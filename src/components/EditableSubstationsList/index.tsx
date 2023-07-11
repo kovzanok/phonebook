@@ -26,8 +26,8 @@ export default function EditableSubstationList() {
             </Title>
             <div className={classNames["substation-item__wrapper"]}>
               {index === 0 ? (
-                <ActionIcon onClick={addSubstation}>
-                  <IoIosAddCircleOutline size='28px' />
+                <ActionIcon size={"xl"} onClick={addSubstation}>
+                  <IoIosAddCircleOutline size='40px' />
                 </ActionIcon>
               ) : (
                 <CloseButton
@@ -37,10 +37,12 @@ export default function EditableSubstationList() {
               )}
               <div className={classNames["inputs-wrapper"]}>
                 <TextInput
+                size="lg"
                   placeholder='Подстанция'
                   {...form.getInputProps(`substations.${index}.name`)}
                 />
                 <TextInput
+                size="lg"
                   placeholder='Фидера'
                   {...form.getInputProps(`substations.${index}.info`)}
                   fz='20px'

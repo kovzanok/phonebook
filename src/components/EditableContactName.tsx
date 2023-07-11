@@ -21,11 +21,13 @@ export default function EditableContactName({
       {"position" in contact ? (
         <>
           <TextInput
+          size="lg"
             fw='bold'
             placeholder='Должность'
             {...form.getInputProps(`${listName}.${index}.position`)}
           ></TextInput>
           <TextInput
+          size="lg"
             placeholder='ФИО'
             fz='20px'
             {...form.getInputProps(`${listName}.${index}.name`)}
@@ -33,6 +35,7 @@ export default function EditableContactName({
         </>
       ) : (
         <TextInput
+        size="lg"
           placeholder='Контакт'
           fz='20px'
           {...form.getInputProps(`${listName}.${index}.name`)}
