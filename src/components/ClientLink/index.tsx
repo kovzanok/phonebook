@@ -1,14 +1,11 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useSearchParams } from "react-router-dom";
 import classNames from "./ClientLink.module.css";
-import { handleActiveFunction } from "../../types";
+import { IClient, handleActiveFunction } from "../../types";
 
-interface IClientLinkProps {
-  _id: number;
-  name: string;
-}
+type IClientLinkProps = Pick<IClient, "_id" | "name">;
 
 export default function ClientLink({ name, _id }: IClientLinkProps) {
+  const [searchParams] = useSearchParams();
   const handleActive: handleActiveFunction = ({ isActive }) => {
     if (!isActive)
       return Object.values(classNames)
@@ -18,7 +15,7 @@ export default function ClientLink({ name, _id }: IClientLinkProps) {
   };
 
   return (
-    <NavLink className={handleActive} to={`${_id}`}>
+    <NavLink className={handleActive} to={`${_id}?${searchParams.toString()}`}>
       {name}
     </NavLink>
   );

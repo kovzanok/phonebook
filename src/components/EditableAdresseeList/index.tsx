@@ -1,10 +1,9 @@
 import { ActionIcon, CloseButton, TextInput } from "@mantine/core";
-import React from "react";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import classNames from "./EditableAdresseeList.module.css";
 import { randomId } from "@mantine/hooks";
 
-import { useFormContext } from "../../pages/NewClientPage";
+import { useFormContext } from "../../formContext/index";
 
 interface IEditableAdresseeListProps {
   index: number;
@@ -38,11 +37,12 @@ export default function EditableAdresseeList({
         <li key={item._id} className={classNames["adressee-item"]}>
           {itemIndex === 0 ? (
             <ActionIcon
+              size={"xl"}
               onClick={addAdressee}
               variant='transparent'
               disabled={list.length === 3}
             >
-              <IoIosAddCircleOutline size='28px' />
+              <IoIosAddCircleOutline size='40px' />
             </ActionIcon>
           ) : (
             <CloseButton
@@ -51,6 +51,7 @@ export default function EditableAdresseeList({
             />
           )}
           <TextInput
+            size='lg'
             placeholder={placeholder}
             {...form.getInputProps(
               `${listName}.${index}.${listType}.${itemIndex}.value`

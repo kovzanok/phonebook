@@ -1,13 +1,14 @@
 import { Button, Flex, TextInput } from "@mantine/core";
-import React from "react";
 import axios from "../axios/axios";
-
 import { IClient, adressee } from "../types";
 import EditableSubstationList from "../components/EditableSubstationsList";
 import { EditableContactsList } from "../components/EditableContactsList";
-import { createFormContext, isNotEmpty } from "@mantine/form";
+import { isNotEmpty } from "@mantine/form";
 import { randomId } from "@mantine/hooks";
 import { useNavigate } from "react-router";
+import { addClient, updateClient } from "../store/clientsSlice";
+import { useAppDispatch } from "../store/store";
+import { FormProvider, useForm } from "../formContext/index";
 
 const initialClient: IClient = {
   _id: randomId(),
@@ -33,10 +34,6 @@ const initialClient: IClient = {
   ],
 };
 
-const [FormProvider, useFormContext, useForm] = createFormContext<IClient>();
-
-export { useFormContext };
-
 const validatePhoneAndEmailField = (
   value: string,
   values: adressee,
@@ -48,6 +45,7 @@ const validatePhoneAndEmailField = (
   const index = Number(path.split(".")[3]);
   try {
     const compareValue =
+      // @ts-ignore
       values[listType][contactIndex][
         subListType === "email" ? "phones" : "email"
       ][index].value;
@@ -62,6 +60,7 @@ const validatePhoneAndEmailField = (
 };
 
 export default function NewClientPage({ client = initialClient }) {
+  const dispatch = useAppDispatch();
   const isEditMode = client !== initialClient;
   const navigate = useNavigate();
   const form = useForm({
@@ -94,11 +93,13 @@ export default function NewClientPage({ client = initialClient }) {
   });
 
   const handleSubmit = async () => {
-    let data;
+    let data: IClient;
     if (isEditMode) {
       ({ data } = await axios.put(`clients/${form.values._id}`, form.values));
+      dispatch(updateClient(data));
     } else {
       ({ data } = await axios.post("clients/new", form.values));
+      dispatch(addClient(data));
     }
     navigate(`/${data._id}`, { replace: true });
   };
@@ -116,6 +117,7 @@ export default function NewClientPage({ client = initialClient }) {
           }}
         >
           <TextInput
+            size='lg'
             ta='center'
             w='65%'
             m='0 auto'

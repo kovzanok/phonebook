@@ -12,16 +12,17 @@ import {
 } from "@mantine/core";
 
 import { Link, Navigate } from "react-router-dom";
-import { authContextValueType, loginContextValueType } from "../types";  
-import { AuthContext, LoginContext } from "../context";
-import { useContext } from "react";
+import { LoginParams } from "../types";
 import { useForm } from "@mantine/form";
-import axios from "../axios/axios";
-import Axios from "axios";
+import { useAppDispatch } from "../store/store";
+import { useSelector } from "react-redux";
+import { authSelector, fetchRegistration } from "../store/authSlice";
+import { SerializedError } from "@reduxjs/toolkit";
 
 export default function RegisterPage() {
-  const [isAuth, setIsAuth] = useContext(AuthContext) as authContextValueType;
-  const [,setLogin]=useContext(LoginContext) as loginContextValueType;
+  const auth = useSelector(authSelector);
+  const dispatch = useAppDispatch();
+
   const form = useForm({
     initialValues: {
       login: "",
@@ -37,30 +38,21 @@ export default function RegisterPage() {
         value !== values.password ? "Пароли не совпадают" : null,
     },
   });
-  if (isAuth) {
-    return <Navigate to={window.sessionStorage.getItem('prevUrl') || '/'} />;
-  }
 
-  const submitRegisterForm = async ({
-    login,
-    password,
-  }: {
-    login: string;
-    password: string;
-  }) => {
+  const submitRegisterForm = async ({ login, password }: LoginParams) => {
     try {
-      const { token,userLogin } = (
-        await axios.post("/auth/registration", { login, password })
-      ).data;
-      window.localStorage.setItem("phonebook-token", token);
-      setIsAuth(true);
-      setLogin(userLogin);
-    } catch (error) {
-      if (Axios.isAxiosError(error)) {
-        form.setFieldError("login", error.response?.data.message);
+      const res = await dispatch(fetchRegistration({ login, password })).unwrap();
+      if (res?.token) {
+        window.localStorage.setItem("phonebook-token", res.token);
       }
+    } catch(err) {
+      form.setFieldError("auth", <Text>{(err as SerializedError).message}</Text>);
     }
   };
+
+  if (auth.isAuth) {
+    return <Navigate to={window.sessionStorage.getItem("prevUrl") || "/"} />;
+  }
 
   return (
     <Center h={"100vh"}>
@@ -98,6 +90,9 @@ export default function RegisterPage() {
                 label='Повторите пароль'
                 {...form.getInputProps("confirmPassword")}
               />
+              <Text color='red' ta='center'>
+                {form.errors.auth}
+              </Text>
               <Group position='center' mt='md'>
                 <Button type='submit'>Зарегистрироваться</Button>
               </Group>

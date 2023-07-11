@@ -5,8 +5,6 @@ interface IClientsListProps {
   clients: IClient[];
 }
 
-interface IListItemProps {}
-
 export default function ClientsList({ clients }: IClientsListProps) {
   return (
     <ul
@@ -20,13 +18,11 @@ export default function ClientsList({ clients }: IClientsListProps) {
         rowGap: "10px",
       }}
     >
-      {clients.map(
-        (client: IClient): React.ReactElement<IListItemProps> => (
-          <li style={{ width: "100%" }} key={client._id}>
-            <ClientLink {...client} />
-          </li>
-        )
-      )}
+      {clients.map((client: IClient) => (
+        <li style={{ width: "100%" }} key={client._id}>
+          <ClientLink {...client} />
+        </li>
+      ))}
     </ul>
   );
 }

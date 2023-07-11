@@ -1,16 +1,13 @@
-import React from "react";
-
 import { TextInput } from "@mantine/core";
 
-import { useFormContext } from "../pages/NewClientPage";
+import { useFormContext } from "../formContext/index";
 
 interface IContactNameProps {
-  listName: "contacts" | "people"; 
+  listName: "contacts" | "people";
   index: number;
 }
 
 export default function EditableContactName({
-  
   listName,
   index,
 }: IContactNameProps) {
@@ -21,11 +18,13 @@ export default function EditableContactName({
       {"position" in contact ? (
         <>
           <TextInput
+            size='lg'
             fw='bold'
             placeholder='Должность'
             {...form.getInputProps(`${listName}.${index}.position`)}
           ></TextInput>
           <TextInput
+            size='lg'
             placeholder='ФИО'
             fz='20px'
             {...form.getInputProps(`${listName}.${index}.name`)}
@@ -33,6 +32,7 @@ export default function EditableContactName({
         </>
       ) : (
         <TextInput
+          size='lg'
           placeholder='Контакт'
           fz='20px'
           {...form.getInputProps(`${listName}.${index}.name`)}

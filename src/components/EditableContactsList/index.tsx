@@ -5,7 +5,7 @@ import EditableContactName from "../EditableContactName";
 import { randomId } from "@mantine/hooks";
 import EditableAdresseeList from "../EditableAdresseeList";
 import { IoIosAddCircleOutline } from "react-icons/io";
-import { useFormContext } from "../../pages/NewClientPage";
+import { useFormContext } from "../../formContext/index";
 
 interface IEditableContactsListProps {
   list: "contacts" | "people";
@@ -53,8 +53,8 @@ export const EditableContactsList = ({
               return (
                 <li key={contact._id} className={classNames["contacts-item"]}>
                   {index === 0 ? (
-                    <ActionIcon onClick={addContact}>
-                      <IoIosAddCircleOutline size='28px' />
+                    <ActionIcon size={"xl"} onClick={addContact}>
+                      <IoIosAddCircleOutline size='40px' />
                     </ActionIcon>
                   ) : (
                     <CloseButton
@@ -75,6 +75,7 @@ export const EditableContactsList = ({
                   />
                   {"info" in contact && (
                     <TextInput
+                      size='lg'
                       placeholder='Примечание'
                       {...form.getInputProps(`${list}.${index}.info`)}
                     />

@@ -1,25 +1,27 @@
 import { Navigate, Outlet } from "react-router-dom";
-
 import { AppShell, Text, useMantineTheme, MantineTheme } from "@mantine/core";
 import MyFooter from "./MyFooter";
 import MyHeader from "./MyHeader";
-import { useContext, useState } from "react";
-import MyNavBar from "./MyNavBar";
-import { authContextValueType } from "../types";
-import { AuthContext } from "../context";
+import { useState } from "react";
+import MyNavBar from "./MyNavBar/MyNavBar";
+import { useSelector } from "react-redux";
+import { authSelector } from "../store/authSlice";
 
 window.onunload = () => {
   const pathname = window.location.pathname;
   if (pathname !== "/login" && pathname !== "/register") {
-    window.sessionStorage.setItem("prevUrl", window.location.pathname);
+    window.sessionStorage.setItem(
+      "prevUrl",
+      window.location.pathname + window.location.search
+    );
   }
 };
 
 export default function Layout() {
+  const auth = useSelector(authSelector);
   const [opened, setOpened] = useState<boolean>(false);
   const theme: MantineTheme = useMantineTheme();
-  const [isAuth, setIsAuth] = useContext(AuthContext) as authContextValueType;
-  if (!isAuth) {
+  if (!auth.isAuth) {
     return <Navigate to='/login' />;
   }
   return (

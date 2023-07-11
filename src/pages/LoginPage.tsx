@@ -10,21 +10,18 @@ import {
   MediaQuery,
   Title,
 } from "@mantine/core";
-import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { Navigate } from "react-router-dom";
-import axios from "../axios/axios";
-import Axios from "axios";
 import { useForm } from "@mantine/form";
-import { authContextValueType, loginContextValueType } from "../types";
-import { AuthContext, LoginContext } from "../context";
+import { useAppDispatch } from "../store/store";
+import { useSelector } from "react-redux";
+import { authSelector, fetchLogin } from "../store/authSlice";
+import { LoginParams } from "../types";
+import { SerializedError } from "@reduxjs/toolkit";
 
 export default function LoginPage() {
-  const [isAuth, setIsAuth] = useContext(AuthContext) as authContextValueType;
-  const [, setLogin] = useContext(LoginContext) as loginContextValueType;
-  if (isAuth) {
-    return <Navigate to={window.sessionStorage.getItem('prevUrl') || '/'} />;
-  }
+  const auth = useSelector(authSelector);
+  const dispatch = useAppDispatch();
 
   const form = useForm({
     initialValues: {
@@ -39,25 +36,20 @@ export default function LoginPage() {
     },
   });
 
-  const submitLoginForm = async ({
-    login,
-    password,
-  }: {
-    login: string;
-    password: string;
-  }) => {
+  const submitLoginForm = async ({ login, password }: LoginParams) => {
     try {
-      const { token,userLogin } = (await axios.post("/auth/login", { login, password }))
-        .data;
-      window.localStorage.setItem("phonebook-token", token);
-      setIsAuth(true);
-      setLogin(userLogin);
-    } catch (error) {
-      if (Axios.isAxiosError(error)) {
-        form.setFieldError("auth", error.response?.data.message);
+      const res = await dispatch(fetchLogin({ login, password })).unwrap();
+      if (res?.token) {
+        window.localStorage.setItem("phonebook-token", res.token);
       }
+    } catch (err) {
+      form.setFieldError("auth", <Text>{(err as SerializedError).message}</Text>);
     }
   };
+
+  if (auth.isAuth) {
+    return <Navigate to={window.sessionStorage.getItem("prevUrl") || "/"} />;
+  }
 
   return (
     <Center h={"100vh"}>
@@ -91,7 +83,7 @@ export default function LoginPage() {
                 label='Пароль'
                 {...form.getInputProps("password")}
               />
-              <Text ta='center' color='red'>
+              <Text color='red' ta='center'>
                 {form.errors.auth}
               </Text>
               <Group position='center' mt='md'>

@@ -1,0 +1,4 @@
+input::-webkit-search-cancel-button {
+  appearance: auto!important;
+  cursor: pointer;
+}

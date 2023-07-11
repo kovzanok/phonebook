@@ -1,21 +1,30 @@
-import React from "react";
 import { IClient } from "../types";
 import { Title, Flex, ActionIcon, Loader, Text } from "@mantine/core";
 import SubstationList from "../components/SubstationsList";
 import { ContactsList } from "../components/ContactsList";
 import { AiOutlineEdit, AiFillDelete } from "react-icons/ai";
-import { NavLink, useNavigate, useParams } from "react-router-dom";
+import {
+  NavLink,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 import { useState, useEffect } from "react";
 import { AxiosResponse } from "axios";
 import axios from "../axios/axios";
 import { modals } from "@mantine/modals";
+import { useAppDispatch } from "../store/store";
+import { clientsSelector, removeClient } from "../store/clientsSlice";
+import { useSelector } from "react-redux";
 
 export default function ClientPage() {
   const { id } = useParams();
   const [client, setClient] = useState<IClient | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const navigate = useNavigate();
-
+  const dispatch = useAppDispatch();
+  const [searchParams] = useSearchParams();
+  const clients = useSelector(clientsSelector);
   useEffect(() => {
     setIsLoading(true);
     axios.get(`/clients/${id}`).then((res: AxiosResponse) => {
@@ -43,8 +52,17 @@ export default function ClientPage() {
     });
 
   const deleteContact = async () => {
+    console.log(clients);
     await axios.delete(`clients/${id}`);
-    navigate("/");
+    if (id) {
+      dispatch(removeClient(id));
+    }
+    const nextClient = clients.find((client) => client._id !== id);
+    if (clients.length !== 0 && nextClient) {
+      navigate(`/${nextClient._id}/?${searchParams.toString()}`);
+    } else {
+      navigate(`/?${searchParams.toString()}`);
+    }
   };
 
   if (isLoading || !client) {
@@ -62,7 +80,7 @@ export default function ClientPage() {
             {client.name}
           </Title>
           <ActionIcon variant='outline'>
-            <NavLink to={`/${id}/edit`}>
+            <NavLink to={`/${id}/edit/?${searchParams.toString()}`}>
               <AiOutlineEdit color='initial' size='30px' />
             </NavLink>
           </ActionIcon>

@@ -1,8 +1,7 @@
-import React from "react";
 import { TextInput, ActionIcon, CloseButton, Title } from "@mantine/core";
 import classNames from "./EditableSubstationList.module.css";
 import { IoIosAddCircleOutline } from "react-icons/io";
-import { useFormContext } from "../../pages/NewClientPage";
+import { useFormContext } from "../../formContext/index";
 
 import { randomId } from "@mantine/hooks";
 
@@ -26,8 +25,8 @@ export default function EditableSubstationList() {
             </Title>
             <div className={classNames["substation-item__wrapper"]}>
               {index === 0 ? (
-                <ActionIcon onClick={addSubstation}>
-                  <IoIosAddCircleOutline size='28px' />
+                <ActionIcon size={"xl"} onClick={addSubstation}>
+                  <IoIosAddCircleOutline size='40px' />
                 </ActionIcon>
               ) : (
                 <CloseButton
@@ -37,10 +36,12 @@ export default function EditableSubstationList() {
               )}
               <div className={classNames["inputs-wrapper"]}>
                 <TextInput
+                size="lg"
                   placeholder='Подстанция'
                   {...form.getInputProps(`substations.${index}.name`)}
                 />
                 <TextInput
+                size="lg"
                   placeholder='Фидера'
                   {...form.getInputProps(`substations.${index}.info`)}
                   fz='20px'

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { IClient } from "../types";
 import NewClientPage from "./NewClientPage";
 import { useParams } from "react-router-dom";
