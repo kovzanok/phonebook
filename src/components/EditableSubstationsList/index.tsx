@@ -1,8 +1,7 @@
-import React from "react";
 import { TextInput, ActionIcon, CloseButton, Title } from "@mantine/core";
 import classNames from "./EditableSubstationList.module.css";
 import { IoIosAddCircleOutline } from "react-icons/io";
-import { useFormContext } from "../../pages/NewClientPage";
+import { useFormContext } from "../../formContext/index";
 
 import { randomId } from "@mantine/hooks";
 

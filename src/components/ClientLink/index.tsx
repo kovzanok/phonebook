@@ -1,4 +1,3 @@
-import React from "react";
 import { NavLink, useSearchParams } from "react-router-dom";
 import classNames from "./ClientLink.module.css";
 import { IClient, handleActiveFunction } from "../../types";

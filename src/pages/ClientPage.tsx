@@ -1,4 +1,3 @@
-import React from "react";
 import { IClient } from "../types";
 import { Title, Flex, ActionIcon, Loader, Text } from "@mantine/core";
 import SubstationList from "../components/SubstationsList";

@@ -11,6 +11,7 @@ import { LoadingOverlay } from "@mantine/core";
 import { useAppDispatch } from "./store/store";
 import { authSelector, verifyAuth } from "./store/authSlice";
 import { useSelector } from "react-redux";
+import { isAxiosError } from "axios";
 
 function App() {
   const auth = useSelector(authSelector);
@@ -18,8 +19,12 @@ function App() {
   useEffect(() => {
     try {
       dispatch(verifyAuth());
-    } catch {}
-  }, []);
+    } catch (err) {
+      if (isAxiosError(err)) {
+        console.log(err.message);
+      }
+    }
+  }, [dispatch]);
   if (auth.isLoading === "loading") return <LoadingOverlay visible />;
   return (
     <>

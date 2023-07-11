@@ -9,7 +9,6 @@ import { useSelector } from "react-redux";
 import { useAppDispatch } from "../../store/store";
 import "./MyNavBar.css";
 
-
 interface IMyNavBarProps {
   opened: boolean;
 }
@@ -25,7 +24,7 @@ export default function MyNavBar({ opened }: IMyNavBarProps) {
 
   useEffect(() => {
     dispatch(fetchClients(searchParams));
-  }, []);
+  }, [dispatch, searchParams]);
 
   const handleSubmit = async () => {
     setSearchParams(form.values);
@@ -56,7 +55,6 @@ export default function MyNavBar({ opened }: IMyNavBarProps) {
         >
           <Flex justify='center' align='center' gap='15px'>
             <TextInput
-              
               type='search'
               size='lg'
               width='30em'

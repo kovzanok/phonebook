@@ -17,7 +17,7 @@ export const fetchRegistration = createAsyncThunk(
       return data;
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
-        const response: AxiosResponse<ErrorMessage, any> = error.response;
+        const response: AxiosResponse<ErrorMessage, unknown> = error.response;
         throw new Error(response.data.message);
       }
     }
@@ -39,7 +39,7 @@ export const fetchLogin = createAsyncThunk(
       return data;
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
-        const response: AxiosResponse<ErrorMessage, any> = error.response;
+        const response: AxiosResponse<ErrorMessage, unknown> = error.response;
         throw new Error(response.data.message);
       }
     }

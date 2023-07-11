@@ -3,12 +3,12 @@ import axios from "../axios/axios";
 import { IClient, adressee } from "../types";
 import EditableSubstationList from "../components/EditableSubstationsList";
 import { EditableContactsList } from "../components/EditableContactsList";
-import { createFormContext, isNotEmpty } from "@mantine/form";
+import { isNotEmpty } from "@mantine/form";
 import { randomId } from "@mantine/hooks";
 import { useNavigate } from "react-router";
 import { addClient, updateClient } from "../store/clientsSlice";
 import { useAppDispatch } from "../store/store";
-
+import { FormProvider, useForm } from "../formContext/index";
 
 const initialClient: IClient = {
   _id: randomId(),
@@ -34,10 +34,6 @@ const initialClient: IClient = {
   ],
 };
 
-const [FormProvider, useFormContext, useForm] = createFormContext<IClient>();
-
-export { useFormContext };
-
 const validatePhoneAndEmailField = (
   value: string,
   values: adressee,
@@ -49,6 +45,7 @@ const validatePhoneAndEmailField = (
   const index = Number(path.split(".")[3]);
   try {
     const compareValue =
+      // @ts-ignore
       values[listType][contactIndex][
         subListType === "email" ? "phones" : "email"
       ][index].value;
@@ -120,7 +117,7 @@ export default function NewClientPage({ client = initialClient }) {
           }}
         >
           <TextInput
-            size="lg"
+            size='lg'
             ta='center'
             w='65%'
             m='0 auto'
