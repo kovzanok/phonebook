@@ -4,13 +4,19 @@ import { Title, Flex, ActionIcon, Loader, Text } from "@mantine/core";
 import SubstationList from "../components/SubstationsList";
 import { ContactsList } from "../components/ContactsList";
 import { AiOutlineEdit, AiFillDelete } from "react-icons/ai";
-import { NavLink, useNavigate, useParams } from "react-router-dom";
+import {
+  NavLink,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 import { useState, useEffect } from "react";
 import { AxiosResponse } from "axios";
 import axios from "../axios/axios";
 import { modals } from "@mantine/modals";
 import { useAppDispatch } from "../store/store";
-import { removeClient } from "../store/clientsSlice";
+import { clientsSelector, removeClient } from "../store/clientsSlice";
+import { useSelector } from "react-redux";
 
 export default function ClientPage() {
   const { id } = useParams();
@@ -18,6 +24,8 @@ export default function ClientPage() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const [searchParams] = useSearchParams();
+  const clients = useSelector(clientsSelector);
   useEffect(() => {
     setIsLoading(true);
     axios.get(`/clients/${id}`).then((res: AxiosResponse) => {
@@ -45,11 +53,17 @@ export default function ClientPage() {
     });
 
   const deleteContact = async () => {
+    console.log(clients);
     await axios.delete(`clients/${id}`);
     if (id) {
       dispatch(removeClient(id));
     }
-    navigate("/");
+    const nextClient = clients.find((client) => client._id !== id);
+    if (clients.length !== 0 && nextClient) {
+      navigate(`/${nextClient._id}/?${searchParams.toString()}`);
+    } else {
+      navigate(`/?${searchParams.toString()}`);
+    }
   };
 
   if (isLoading || !client) {
