@@ -1,12 +1,14 @@
 import { Navbar, Button, Flex, TextInput } from "@mantine/core";
-import ClientsList from "./ClientsList";
-import NewClientLink from "./NewClientLink";
+import ClientsList from "../ClientsList";
+import NewClientLink from "../NewClientLink";
 import { useEffect } from "react";
 import { useForm } from "@mantine/form";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { clientsSelector, fetchClients } from "../store/clientsSlice";
+import { clientsSelector, fetchClients } from "../../store/clientsSlice";
 import { useSelector } from "react-redux";
-import { useAppDispatch } from "../store/store";
+import { useAppDispatch } from "../../store/store";
+import "./MyNavBar.css";
+
 
 interface IMyNavBarProps {
   opened: boolean;
@@ -54,6 +56,9 @@ export default function MyNavBar({ opened }: IMyNavBarProps) {
         >
           <Flex justify='center' align='center' gap='15px'>
             <TextInput
+              
+              type='search'
+              size='lg'
               width='30em'
               {...form.getInputProps("search")}
               placeholder='Поиск'

@@ -3,7 +3,7 @@ import { AppShell, Text, useMantineTheme, MantineTheme } from "@mantine/core";
 import MyFooter from "./MyFooter";
 import MyHeader from "./MyHeader";
 import { useState } from "react";
-import MyNavBar from "./MyNavBar";
+import MyNavBar from "./MyNavBar/MyNavBar";
 import { useSelector } from "react-redux";
 import { authSelector } from "../store/authSlice";
 
