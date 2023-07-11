@@ -80,7 +80,7 @@ export default function ClientPage() {
             {client.name}
           </Title>
           <ActionIcon variant='outline'>
-            <NavLink to={`/${id}/edit`}>
+            <NavLink to={`/${id}/edit/?${searchParams.toString()}`}>
               <AiOutlineEdit color='initial' size='30px' />
             </NavLink>
           </ActionIcon>
